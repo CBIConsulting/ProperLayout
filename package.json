@@ -1,0 +1,37 @@
+{
+  "name": "ProperLayout",
+  "version": "0.1.0",
+  "description": "A Proper Layout component",
+  "scripts": {
+    "build": "webpack && webpack --config webpack.config.example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CBIConsulting/ProperLayout.git"
+  },
+  "keywords": [
+    "react-component",
+    "layout",
+    "panels"
+  ],
+  "author": "algm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CBIConsulting/ProperLayout/issues"
+  },
+  "homepage": "https://github.com/CBIConsulting/ProperLayout",
+  "devDependencies": {
+    "babel-core": "^5.8.22",
+    "babel-loader": "^5.3.2",
+    "css-loader": "^0.15.6",
+    "node-sass": "^3.2.0",
+    "sass-loader": "^2.0.0",
+    "style-loader": "^0.12.3",
+    "webpack": "^1.11.0"
+  },
+  "dependencies": {
+    "jquery": "^2.1.4",
+    "react": "^0.13.3",
+    "underscore": "^1.8.3"
+  }
+}
