@@ -1,0 +1,71 @@
+//layout
+.properlayout {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+
+ .properlayout {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .layout-row, .layout-col {
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+
+    >.row-inner, >.col-inner {
+      box-sizing: border-box;
+      background: #fefefe;
+      width: 100%;
+      overflow: auto;
+    }
+
+    &.layout-row {
+      width: 100%;
+    }
+
+    &.layout-col {
+      height: 100%;
+      float: left;
+    }
+  }
+
+  &.spaced {
+    background: #ccc;
+
+    >.layout-row, >.layout-col {
+      >.row-inner, >.col-inner {
+        margin-top: 8px;
+        margin-left: 8px;
+      }
+    }
+
+    >.layout-row {
+      >.row-inner {
+        margin-right: 8px;
+      }
+
+      &:last-child {
+        >.row-inner {
+          margin-bottom: 8px;
+        }
+      }
+    }
+
+    >.layout-col {
+      >.col-inner {
+        margin-bottom: 8px;
+      }
+
+      &:last-child {
+        >.col-inner {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
