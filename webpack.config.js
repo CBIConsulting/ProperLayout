@@ -25,7 +25,7 @@ module.exports = {
     path: __dirname + "/dist",
   },
   externals: {
-    'react': 'React',
+    'react/addons': 'React',
     'jquery': '$',
     'underscore': '_'
   },
