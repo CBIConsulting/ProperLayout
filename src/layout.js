@@ -102,11 +102,13 @@ const Row = React.createClass({
       height: this.state.innerHeight
     };
 
-    return <div className={className} style={style} id={this.props.uniqueId}>
-      <div className="l-inner row-inner" ref="inner" style={innerStyle} key={this.props.uniqueId + '-inner'}>
-        {this.props.children}
-      </div>
-    </div>;
+    return (
+	  <div className={className} style={style} id={this.props.uniqueId}>
+	    <div className="l-inner row-inner" ref="inner" style={innerStyle} key={this.props.uniqueId + '-inner'}>
+	      {this.props.children}
+		</div>
+	  </div>
+  	);
   }
 });
 
