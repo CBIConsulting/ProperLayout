@@ -7,8 +7,7 @@ main.id = 'main';
 document.body.appendChild(main);
 
 ReactDOM.render(
-	<Layout
-		type='row'>
+	<Layout type='row'>
 		<Section>
 			<Button/>
 		</Section>
@@ -16,7 +15,12 @@ ReactDOM.render(
 		<Section />
 		<Section />
 		<Section />
-		<Section />
+		<Section>
+			<Layout type='column'>
+				<Section />
+				<Section />
+			</Layout>
+		</Section>
 		<Section />
 		<Section />
 		<Section />

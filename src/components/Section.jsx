@@ -7,8 +7,6 @@ class Section extends Component {
 
 		this.state = {
 			key: this.props.type + '--' + shortid.generate(),
-			height: null,
-			width: null,
 			mode: this.props.mode || 'default',
 			className: 'section'
 		};
@@ -16,22 +14,22 @@ class Section extends Component {
 		this.computeClasses = this.computeClasses.bind(this);
 	}
 
-	componentDidMount() {
-		this.setState(() => ({
-			height: this.props.height,
-			width: this.props.width
-		}));
-	}
+	// componentDidMount() {
+	// 	this.setState(() => ({
+	// 		height: this.props.height,
+	// 		width: this.props.width
+	// 	}));
+	// }
 
-	componentWillReceiveProps(nextProps) {
-		if (this.props.width !== nextProps.width || this.props.height !== nextProps.height) {
-			this.setState(() => ({
-				...this.state,
-				width: nextProps.width,
-				height: nextProps.height
-			}));
-		}
-	}
+	// componentWillReceiveProps(nextProps) {
+	// 	if (this.props.width !== nextProps.width || this.props.height !== nextProps.height) {
+	// 		this.setState(() => ({
+	// 			...this.state,
+	// 			width: nextProps.width,
+	// 			height: nextProps.height
+	// 		}));
+	// 	}
+	// }
 
 	computeClasses() {
 		let className = this.state.className;
@@ -47,8 +45,10 @@ class Section extends Component {
 
 	render () {
 		let styles = {
-			height: this.state.height + 'px',
-			width: this.state.width + 'px',
+			height: this.props.height + 'px',
+			width: this.props.width + 'px',
+			top: this.props.top + 'px',
+			left: this.props.left + 'px',
 			border: '1px solid blue'
 		};
 
@@ -58,8 +58,8 @@ class Section extends Component {
 				id={this.state.key}
 				style={styles}
 				className={this.state.className}>
-				{this.state.key}
-				{this.props.children}
+					{/*this.state.key*/}
+					{this.props.children}
 			</div>
 		);
 	}
