@@ -3,18 +3,21 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: './example/example.jsx',
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$|\.jsx$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-				options: {
-					presets: ['react', 'es2015']
+        use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['react', 'es2015'],
+						plugins: ['transform-object-rest-spread']
+					}
 				}
       },
       {
         test: /\.scss$/,
-        loader: 'style!css!sass'
+        loader: 'style-loader!css-loader!sass-loader'
       }
     ],
   },

@@ -1,0 +1,61 @@
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+html, body, #main {
+	width: 100%;
+	height: 100%;
+}
+
+.layout {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#button {
+	position: absolute;
+	top: 30px;
+	left: 0;
+	background-color: indigo;
+	color: white;
+}
+
+.layout, .section {
+	box-sizing: border-box;
+}
+
+// layout type
+// --- row
+.layout.row {
+	>.section {
+		display: inline-block;
+	}
+}
+
+// --- column
+.layout.column {
+	>.section {
+		display: block;
+	}
+}
+
+// flex-direction
+// --- reverse
+.layout.row.reverse {
+	direction: rtl;
+	>.section {
+		display: inline-block;
+	}
+}
+
+.layout.column.reverse {
+	transform: scaleY(-1);
+	-ms-transform: scaleY(-1);
+	-webkit-transform: scaleY(-1);
+	>.section {
+		display: block;
+	}
+}
