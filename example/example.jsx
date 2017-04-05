@@ -1,29 +1,26 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import { Layout, Section, Button } from "../src/ProperLayout.jsx";
+import { Layout, Section } from "../src/ProperLayout.jsx";
 
 let main = document.createElement('div');
 main.id = 'main';
 document.body.appendChild(main);
 
 ReactDOM.render(
-	<Layout type='row'>
+	<Layout type='column'>
+		<Section height='80px' />
 		<Section>
-			<Button/>
-		</Section>
-		<Section />
-		<Section />
-		<Section />
-		<Section />
-		<Section>
-			<Layout type='column'>
-				<Section />
-				<Section />
+			<Layout type='row'>
+				<Section width='250px' />
+				<Section>
+					<Layout type='column' mode='spaced'>
+						<Section />
+						<Section height='20%' />
+						<Section />
+					</Layout>
+				</Section>
 			</Layout>
 		</Section>
-		<Section />
-		<Section />
-		<Section />
 	</Layout>,
 	main
 );
