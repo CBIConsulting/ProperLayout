@@ -1,29 +1,31 @@
-var webpack = require('webpack');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  context: __dirname + '/src',
-  entry: "./example.js",
+  entry: './example/example.jsx',
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.js$/,
+        test: /\.js$|\.jsx$/,
         exclude: /node_modules/,
-        loaders: ["babel-loader"],
+        use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['react', 'es2015'],
+						plugins: ['transform-object-rest-spread']
+					}
+				}
       },
       {
         test: /\.scss$/,
-        loader: 'style!css!sass'
-      },
-      { test: /\.css$/, exclude: /\.useable\.css$/, loader: "style!css" },
-      { test: /\.useable\.css$/, loader: "style/useable!css" }
+        loader: 'style-loader!css-loader!sass-loader'
+      }
     ],
   },
   output: {
-    filename: "example.js",
-    path: __dirname + "/example",
+    filename: 'bundle.js',
+    path: __dirname + "/example"
   },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.optimize.DedupePlugin()
-  ]
+	plugins: [
+		new HTMLWebpackPlugin()
+	]
 }

@@ -1,0 +1,62 @@
+
+html, body, #main {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.layout {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.section {
+	position: absolute;
+	overflow: hidden;
+}
+
+.layout, .section {
+	box-sizing: border-box;
+	background-color: transparent;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+// layout type
+// --- row
+.layout.row {
+	>.section {
+		display: inline-block;
+	}
+}
+
+// --- column
+.layout.column {
+	>.section {
+		display: block;
+	}
+}
+
+// layout mode
+// --- spaced
+.layout.spaced {
+	>.section {
+		margin: 16px 8px;
+	}
+}
+
+// flex-direction (currently, after reverse some sections separate by one pixel)
+// --- reverse
+.layout.row.reverse {
+	direction: rtl;
+}
+
+.layout.column.reverse, .layout.column.reverse > .section {
+	transform: scaleY(-1);
+	-ms-transform: scaleY(-1);
+	-webkit-transform: scaleY(-1);
+}
