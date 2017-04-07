@@ -1,3 +1,5 @@
+'use strict';
+
 import React, { Component, PropTypes } from 'react';
 import shortid from 'shortid';
 
@@ -6,33 +8,18 @@ class Section extends Component {
 		super(props);
 
 		this.state = {
-			key: this.props.type + '--' + shortid.generate(),
-			mode: this.props.mode || 'default',
+			key: 'section--' + shortid.generate(),
 			className: 'section'
 		};
-
-		// this.computeClasses = this.computeClasses.bind(this);
 	}
 
-	// computeClasses() {
-	// 	let className = this.state.className;
-	//
-	// 	if (this.state.direction === 'row') {
-	// 		className += ' row';
-	// 	} else if (this.state.direction === 'column') {
-	// 		className += ' column';
-	// 	}
-	//
-	// 	return className;
-	// }
-
-	render () {
+	render() {
 		let styles = {
 			height: this.props.height,
 			width: this.props.width,
 			top: this.props.top,
 			left: this.props.left,
-			border: '1px solid blue'
+			border: this.props.mode === 'default' ? '1px solid blue' : '1px dashed blue'
 		};
 
 		return (
@@ -46,5 +33,9 @@ class Section extends Component {
 		);
 	}
 }
+
+Section.propTypes = {
+	size: PropTypes.string
+};
 
 export default Section;
