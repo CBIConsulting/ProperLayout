@@ -158,7 +158,6 @@ class Layout extends Component {
 	updateChildren() {
 		let { autoSize, totalSpace } = this.calculateAutoSize();
 		let nextPosition = 0;
-		let type = this.props.type;
 
 		return Children.map(this.props.children, (child, index) => {
 			let props = this.evaluateDeprecatedProps(child);
@@ -167,84 +166,22 @@ class Layout extends Component {
 			props.mode = this.props.mode;
 			props.index = index;
 
-			if (type === 'columns') {
-				if (!props.size) {
-					props.position = nextPosition + '%';
-					nextPosition += autoSize;
+			if (props.size) {
+				let sizeType = this.evaluateSizeType(props.size);
+				let parsedSize = parseFloat(props.size);
 
-					if (this.props.mode === 'spaced') {
-						props.height = 'calc(100% - 32px)';
-						props.width = 'calc(' + autoSize + '% - 16px)';
-					} else {
-						props.height = '100%';
-						props.width = autoSize + '%';
-					}
-				} else {
-					let sizeType = this.evaluateSizeType(props.size);
-					let parsedSize = parseFloat(props.size);
-					props.position = nextPosition + '%';
+				props.position = nextPosition + '%';
 
-					if (sizeType === 'pixel') {
-						nextPosition += parseFloat((parsedSize * 100 / totalSpace).toFixed(2));
-
-						if (this.props.mode === 'spaced') {
-							props.width = 'calc(' + props.size + ' - 16px)';
-							props.height = 'calc(100% - 32px)';
-						} else {
-							props.width = props.size;
-							props.height = '100%';
-						}
-					} else if (sizeType === 'percent') {
-						nextPosition += parseFloat(parsedSize.toFixed(2));
-
-						if (this.props.mode === 'spaced') {
-							props.width = 'calc(' + props.size + ' - 16px)';
-							props.height = 'calc(100% - 32px)';
-						} else {
-							props.width = props.size;
-							props.height = '100%';
-						}
-					}
+				if (sizeType === 'pixel') {
+					nextPosition += parseFloat((parsedSize * 100 / totalSpace).toFixed(2));
+				} else if (sizeType === 'percent') {
+					nextPosition += parsedSize;
 				}
-			} else if (type === 'rows') {
-				if (!props.size) {
-					props.position = nextPosition + '%';
-					nextPosition += autoSize;
+			} else {
+				props.size = autoSize + '%';
+				props.position = nextPosition + '%';
 
-					if (this.props.mode === 'spaced') {
-						props.width = 'calc(100% - 16px)';
-						props.height = 'calc(' + autoSize + '% - 32px)';
-					} else {
-						props.width = '100%';
-						props.height = autoSize + '%';
-					}
-				} else {
-					let sizeType = this.evaluateSizeType(props.size);
-					let parsedSize = parseFloat(props.size);
-					props.position = nextPosition + '%';
-
-					if (sizeType === 'pixel') {
-						nextPosition += parseFloat((parsedSize * 100 / totalSpace).toFixed(2));
-
-						if (this.props.mode === 'spaced') {
-							props.width = 'calc(100% - 16px)';
-							props.height = 'calc(' + props.size + ' - 32px)';
-						} else {
-							props.width = '100%';
-							props.height = props.size;
-						}
-					} else if (sizeType === 'percent') {
-						nextPosition += parseFloat(parsedSize.toFixed(2));
-
-						if (this.props.mode === 'spaced') {
-							props.width = 'calc(100% - 16px)';
-							props.height = 'calc(' + props.size + ' - 32px)';
-						} else {
-							props.width = '100%';
-							props.height = props.size;
-						}
-					}
-				}
+				nextPosition += autoSize;
 			}
 
 			return React.cloneElement(child, props);
@@ -266,15 +203,13 @@ class Layout extends Component {
 Layout.defaultProps = {
 	type: 'columns',
 	mode: 'default',
-	direction: 'default',
-	justify: 'flex-start'
+	direction: 'default'
 };
 
 Layout.propTypes = {
 	type: PropTypes.oneOf(['columns', 'rows']),
 	mode: PropTypes.oneOf(['default', 'spaced']),
-	direction: PropTypes.oneOf(['default', 'reverse']),
-	justify: PropTypes.oneOf(['flex-start', 'flex-end', 'center', 'space-between', 'space-around'])
+	direction: PropTypes.oneOf(['default', 'reverse'])
 };
 
 export default Layout;

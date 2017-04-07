@@ -31,10 +31,12 @@ class Section extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		// call to function that will calculate width and height
-		// then setState with those props
+		let { width, height } = this.calculateDimensions();
+
 		this.setState(() => ({
 			...this.state,
+			width,
+			height
 		}));
 	}
 
@@ -92,8 +94,8 @@ class Section extends Component {
 
 	render() {
 		let styles = {
-			height: this.props.height,
-			width: this.props.width,
+			width: this.state.width,
+			height: this.state.height,
 			border: this.props.mode === 'default' ? '1px solid blue' : '1px dashed blue'
 		};
 
