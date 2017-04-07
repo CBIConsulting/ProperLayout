@@ -28,14 +28,14 @@ html, body, #main {
 
 // layout type
 // --- row
-.layout.row {
+.layout.columns {
 	>.section {
 		display: inline-block;
 	}
 }
 
 // --- column
-.layout.column {
+.layout.rows {
 	>.section {
 		display: block;
 	}
@@ -51,11 +51,11 @@ html, body, #main {
 
 // flex-direction (currently, after reverse some sections separate by one pixel)
 // --- reverse
-.layout.row.reverse {
+.layout.columns.reverse {
 	direction: rtl;
 }
 
-.layout.column.reverse, .layout.column.reverse > .section {
+.layout.rows.reverse, .layout.rows.reverse > .section {
 	transform: scaleY(-1);
 	-ms-transform: scaleY(-1);
 	-webkit-transform: scaleY(-1);

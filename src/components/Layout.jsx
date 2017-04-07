@@ -1,3 +1,5 @@
+'use strict';
+
 import React, { Component, PropTypes, Children } from 'react';
 import shortid from 'shortid';
 
@@ -7,172 +9,261 @@ class Layout extends Component {
 
 		this.state = {
 			key: 'layout--' + shortid.generate(),
+			className: 'layout',
 			children: null,
-			mode: this.props.mode || 'default',
-			type: this.props.type || 'row',
-			direction: this.props.direction || 'default',
-			wrap: this.props.wrap || 'nowrap',
-			justifyContent: this.props.justifyContent || 'flex-start',
-			alignItems: this.props.alignItems || 'flex-start',
-			alignContent: this.props.alignContent || 'flex-start',
-			className: 'layout'
+			isChildFixed: null
 		};
 
-		this.computeClasses = this.computeClasses.bind(this);
-		this.computeChildren = this.computeChildren.bind(this);
+		this.evaluateClasses = this.evaluateClasses.bind(this);
+		this.evaluateSizeType = this.evaluateSizeType.bind(this);
+		this.evaluateDeprecatedProps = this.evaluateDeprecatedProps.bind(this);
+		this.isChildFixed = this.isChildFixed.bind(this);
+		this.calculateAutoSize = this.calculateAutoSize.bind(this);
+		this.updateChildren = this.updateChildren.bind(this);
+		this.handleResize = this.handleResize.bind(this);
 	}
 
 	componentDidMount() {
 		this.setState(() => ({
 			...this.state,
-			className: this.computeClasses(this.state.className),
-			children: this.computeChildren(this.state.type)
+			className: this.evaluateClasses(),
+			children: this.updateChildren(),
+			isChildFixed: this.isChildFixed()
 		}));
 
-		window.addEventListener('resize', e => {
-			this.setState(() => ({
-				...this.state,
-				children: this.computeChildren(this.state.type)
-			}));
-		});
+		window.addEventListener('resize', this.handleResize);
 	}
 
-	computeClasses(className) {
-		if (this.state.type === 'row') {
-			className += ' row';
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleResize);
+	}
+
+	// Adds different CSS classes depending on what props were defined
+	evaluateClasses() {
+		let className = this.state.className;
+
+		if (this.props.type === 'columns') {
+			className += ' columns';
 		} else {
-			className += ' column';
+			className += ' rows';
 		}
 
-		if (this.state.direction === 'reverse') {
+		if (this.props.direction === 'reverse') {
 			className += ' reverse';
 		}
 
-		if (this.state.mode === 'spaced') {
+		if (this.props.mode === 'spaced') {
 			className += ' spaced';
 		}
 
 		return className;
 	}
 
-	computeChildren(type) {
+	// Returns size type received in child props
+	evaluateSizeType(size) {
+		let pixel = /^\d+(?:\.\d+)?px$/;
+		let percent = /^\d+(?:\.\d+)?%$/;
+
+		if (pixel.test(size)) {
+			return 'pixel';
+		} else if (percent.test(size)) {
+			return 'percent';
+		}
+	}
+
+	// Evaluate child props to convert deprecated gravity, width, height to size
+	evaluateDeprecatedProps(currentProps) {
+		let props = {
+			...currentProps
+		};
+
+		if (props.size) {
+			return props;
+		} else {
+			if (props.width && this.props.type === 'columns') {
+				props.size = parseFloat(props.width) + 'px';
+			}
+
+			if (props.height && this.props.type === 'rows') {
+				props.size = parseFloat(props.height) + 'px';
+			}
+
+			if (props.gravity >= 0 && props.gravity <= 1) {
+				props.size = 100 * props.gravity + '%';
+			}
+
+			return props;
+		}
+	}
+
+	// Check if there is a child with fixed size
+	isChildFixed() {
+		return Children.map(this.props.children, child => {
+			return this.evaluateSizeType(child.props.size) === 'pixel';
+		});
+	}
+
+	// Handles page resizing
+	handleResize() {
+		if (this.state.isChildFixed) {
+			this.setState(() => ({
+				...this.state,
+				children: this.updateChildren()
+			}));
+		}
+	}
+
+	// Calculates and returns size for elements without custom sizes
+	calculateAutoSize() {
 		let counter = 0;
-		let totalSpace = type === 'row' ? this.node.offsetWidth : this.node.offsetHeight;
+		let totalSpace = this.props.type === 'columns'
+			? this.node.offsetWidth
+			: this.node.offsetHeight;
 		let freeSpace = totalSpace;
 
-		// Calculating space variables
 		Children.forEach(this.props.children, (child, index) => {
-			let width = child.props.width;
-			let height = child.props.height;
+			let props = this.evaluateDeprecatedProps(child.props);
+			let size = props.size;
 
-			if (type === 'row') {
-				if (!width) {
-					counter++;
-				} else {
-					if (/px/.test(width)) {
-						freeSpace -= parseFloat(width);
-					} else if (/%/.test(width)) {
-						freeSpace -= (totalSpace / 100) * parseFloat(width);
-					}
-				}
-			} else if (type === 'column') {
-				if (!height) {
-					counter++;
-				} else {
-					if (/px/.test(height)) {
-						freeSpace -= parseFloat(height);
-					} else if (/%/.test(height)) {
-						freeSpace -= (totalSpace / 100) * parseFloat(height);
-					}
+			if (!size) {
+				counter++;
+			} else {
+				let parsedSize = parseFloat(size);
+				let sizeType = this.evaluateSizeType(size);
+
+				if (sizeType === 'pixel') {
+					freeSpace -= parsedSize;
+				} else if (sizeType === 'percent') {
+					freeSpace -= totalSpace / 100 * parsedSize;
 				}
 			}
 		});
 
-		let size = parseFloat((((freeSpace * 100) / totalSpace) / counter).toFixed(2));
+		// Setting size for elements without custom sizes
+		let autoSize = parseFloat((freeSpace * 100 / totalSpace / counter).toFixed(2));
 
-		// Updating children props for positioning
+		return { autoSize, totalSpace	};
+	}
+
+	// Updating children props for positioning
+	updateChildren() {
+		let { autoSize, totalSpace } = this.calculateAutoSize();
 		let nextPosition = 0;
+		let type = this.props.type;
+
 		return Children.map(this.props.children, (child, index) => {
-			let props = {
-				...child.props,
-				type: this.state.type,
-				mode: this.state.mode,
-				index: index
-			};
+			let props = this.evaluateDeprecatedProps(child.props);
 
+			props.type = this.props.type;
+			props.mode = this.props.mode;
+			props.index = index;
 
-			if (type === 'row') {
-				if (!child.props.width) {
-					if (this.state.mode === 'spaced') {
+			if (type === 'columns') {
+				if (!props.size) {
+					props.left = nextPosition + '%';
+					nextPosition += autoSize;
+
+					if (this.props.mode === 'spaced') {
 						props.height = 'calc(100% - 32px)';
-						props.width = 'calc(' + size + '% - 16px)';
+						props.width = 'calc(' + autoSize + '% - 16px)';
 					} else {
 						props.height = '100%';
-						props.width = size + '%';
+						props.width = autoSize + '%';
 					}
-					props.left = nextPosition + '%';
-					nextPosition += size;
 				} else {
-					props.height = '100%';
+					let sizeType = this.evaluateSizeType(props.size);
+					let parsedSize = parseFloat(props.size);
 					props.left = nextPosition + '%';
-					if (/px/.test(props.width)) {
-						nextPosition += parseFloat(((parseFloat(props.width) * 100) / totalSpace).toFixed(2));
-					} else if (/%/.test(props.width)) {
-						nextPosition += parseFloat(props.width);
+
+					if (sizeType === 'pixel') {
+						nextPosition += parseFloat((parsedSize * 100 / totalSpace).toFixed(2));
+
+						if (this.props.mode === 'spaced') {
+							props.width = 'calc(' + props.size + ' - 16px)';
+							props.height = 'calc(100% - 32px)';
+						} else {
+							props.width = props.size;
+							props.height = '100%';
+						}
+					} else if (sizeType === 'percent') {
+						nextPosition += parseFloat(parsedSize.toFixed(2));
+
+						if (this.props.mode === 'spaced') {
+							props.width = 'calc(' + props.size + ' - 16px)';
+							props.height = 'calc(100% - 32px)';
+						} else {
+							props.width = props.size;
+							props.height = '100%';
+						}
 					}
 				}
-			} else if (type === 'column') {
-				if (!child.props.height) {
+			} else if (type === 'rows') {
+				if (!props.size) {
 					props.top = nextPosition + '%';
-					nextPosition += size;
-					if (this.state.mode === 'spaced') {
-						props.height = 'calc(' + size + '% - 32px)';
+					nextPosition += autoSize;
+
+					if (this.props.mode === 'spaced') {
 						props.width = 'calc(100% - 16px)';
+						props.height = 'calc(' + autoSize + '% - 32px)';
 					} else {
 						props.width = '100%';
-						props.height = size + '%';
+						props.height = autoSize + '%';
 					}
 				} else {
+					let sizeType = this.evaluateSizeType(props.size);
+					let parsedSize = parseFloat(props.size);
 					props.top = nextPosition + '%';
-					if (/px/.test(props.height)) {
-						nextPosition += parseFloat(((parseFloat(props.height) * 100) / totalSpace).toFixed(2));
-						if (this.state.mode === 'spaced') {
+
+					if (sizeType === 'pixel') {
+						nextPosition += parseFloat((parsedSize * 100 / totalSpace).toFixed(2));
+
+						if (this.props.mode === 'spaced') {
 							props.width = 'calc(100% - 16px)';
-							props.height = 'calc(' + props.height + ' - 32px)';
+							props.height = 'calc(' + props.size + ' - 32px)';
 						} else {
 							props.width = '100%';
+							props.height = props.size;
 						}
-					} else if (/%/.test(props.height)) {
-						nextPosition += parseFloat(parseFloat(props.height).toFixed(2));
-						if (this.state.mode === 'spaced') {
+					} else if (sizeType === 'percent') {
+						nextPosition += parseFloat(parsedSize.toFixed(2));
+
+						if (this.props.mode === 'spaced') {
 							props.width = 'calc(100% - 16px)';
-							props.height = 'calc(' + props.height + ' - 32px)';
+							props.height = 'calc(' + props.size + ' - 32px)';
 						} else {
 							props.width = '100%';
+							props.height = props.size;
 						}
 					}
 				}
 			}
-
-			console.log('next position:', nextPosition)
 
 			return React.cloneElement(child, props);
 		});
 	}
 
-	render () {
-		let styles = {};
-
+	render() {
 		return (
 			<div
 				key={this.state.key}
 				ref={node => this.node = node}
-				className={this.state.className}
-				style={styles}>
+				className={this.state.className}>
 					{this.state.children}
 			</div>
 		);
 	}
 }
+
+Layout.defaultProps = {
+	type: 'columns',
+	mode: 'default',
+	direction: 'default'
+};
+
+Layout.propTypes = {
+	type: PropTypes.oneOf(['columns', 'rows']),
+	mode: PropTypes.oneOf(['default', 'spaced']),
+	direction: PropTypes.oneOf(['default', 'reverse'])
+};
 
 export default Layout;
