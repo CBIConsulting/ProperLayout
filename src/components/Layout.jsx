@@ -73,9 +73,7 @@ class Layout extends Component {
 
 	// Evaluate child props to convert deprecated gravity, width, height to size
 	evaluateDeprecatedProps(child) {
-		let props = {
-			...child.props
-		};
+		let props = {...child.props};
 
 		if (props.size) {
 			return props;
@@ -97,10 +95,21 @@ class Layout extends Component {
 	}
 
 	// Check if there is a child with fixed size
+	// (this prevents re-rendering when all sections are responsive)
 	isChildFixed() {
 		return Children.map(this.props.children, child => {
-			return this.evaluateSizeType(child.props.size) === 'pixel';
-		});
+			let props = child.props;
+
+			if (props.size && this.evaluateSizeType(props.size) == 'pixel') {
+				return true;
+			} else if (props.gravity === -1) {
+				if (props.width || props.height) {
+					return true;
+				}
+			} else {
+				return false;
+			}
+		}).some(child => child);
 	}
 
 	// Handles page resizing
@@ -160,7 +169,7 @@ class Layout extends Component {
 
 			if (type === 'columns') {
 				if (!props.size) {
-					props.left = nextPosition + '%';
+					props.position = nextPosition + '%';
 					nextPosition += autoSize;
 
 					if (this.props.mode === 'spaced') {
@@ -173,7 +182,7 @@ class Layout extends Component {
 				} else {
 					let sizeType = this.evaluateSizeType(props.size);
 					let parsedSize = parseFloat(props.size);
-					props.left = nextPosition + '%';
+					props.position = nextPosition + '%';
 
 					if (sizeType === 'pixel') {
 						nextPosition += parseFloat((parsedSize * 100 / totalSpace).toFixed(2));
@@ -199,7 +208,7 @@ class Layout extends Component {
 				}
 			} else if (type === 'rows') {
 				if (!props.size) {
-					props.top = nextPosition + '%';
+					props.position = nextPosition + '%';
 					nextPosition += autoSize;
 
 					if (this.props.mode === 'spaced') {
@@ -212,7 +221,7 @@ class Layout extends Component {
 				} else {
 					let sizeType = this.evaluateSizeType(props.size);
 					let parsedSize = parseFloat(props.size);
-					props.top = nextPosition + '%';
+					props.position = nextPosition + '%';
 
 					if (sizeType === 'pixel') {
 						nextPosition += parseFloat((parsedSize * 100 / totalSpace).toFixed(2));
