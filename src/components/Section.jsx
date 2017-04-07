@@ -11,6 +11,40 @@ class Section extends Component {
 			key: 'section--' + shortid.generate(),
 			className: 'section'
 		};
+
+		this.warnDeprecatedProps = this.warnDeprecatedProps.bind(this);
+	}
+
+	componentDidMount() {
+		this.warnDeprecatedProps();
+	}
+
+	warnDeprecatedProps() {
+		let props = this.props;
+
+		if (props.gravity) {
+			console.warn(
+				"You are using 'gravity' prop in " + this.constructor.name + ".\n" +
+				"This prop is deprecated and might cease to exist in future versions of ProperLayout.\n" +
+				"You might want to use instead a percent value for 'size'."
+			);
+		}
+
+		if (props.width) {
+			console.warn(
+				"You are using 'width' prop in <" + this.constructor.name + ">.\n" +
+				"This prop is deprecated and might cease to exist in future versions of ProperLayout.\n" +
+				"You might want to use instead a pixel value for 'size'."
+			);
+		}
+
+		if (props.height) {
+			console.warn(
+				"You are using 'height' prop in <" + this.constructor.name + ">.\n" +
+				"This prop is deprecated and might cease to exist in future versions of ProperLayout.\n" +
+				"You might want to use instead a pixel value for 'size'."
+			);
+		}
 	}
 
 	render() {

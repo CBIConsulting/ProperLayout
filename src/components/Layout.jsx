@@ -72,9 +72,9 @@ class Layout extends Component {
 	}
 
 	// Evaluate child props to convert deprecated gravity, width, height to size
-	evaluateDeprecatedProps(currentProps) {
+	evaluateDeprecatedProps(child) {
 		let props = {
-			...currentProps
+			...child.props
 		};
 
 		if (props.size) {
@@ -122,7 +122,7 @@ class Layout extends Component {
 		let freeSpace = totalSpace;
 
 		Children.forEach(this.props.children, (child, index) => {
-			let props = this.evaluateDeprecatedProps(child.props);
+			let props = this.evaluateDeprecatedProps(child);
 			let size = props.size;
 
 			if (!size) {
@@ -152,7 +152,7 @@ class Layout extends Component {
 		let type = this.props.type;
 
 		return Children.map(this.props.children, (child, index) => {
-			let props = this.evaluateDeprecatedProps(child.props);
+			let props = this.evaluateDeprecatedProps(child);
 
 			props.type = this.props.type;
 			props.mode = this.props.mode;
@@ -257,13 +257,15 @@ class Layout extends Component {
 Layout.defaultProps = {
 	type: 'columns',
 	mode: 'default',
-	direction: 'default'
+	direction: 'default',
+	justify: 'flex-start'
 };
 
 Layout.propTypes = {
 	type: PropTypes.oneOf(['columns', 'rows']),
 	mode: PropTypes.oneOf(['default', 'spaced']),
-	direction: PropTypes.oneOf(['default', 'reverse'])
+	direction: PropTypes.oneOf(['default', 'reverse']),
+	justify: PropTypes.oneOf(['flex-start', 'flex-end', 'center', 'space-between', 'space-around'])
 };
 
 export default Layout;
