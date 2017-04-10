@@ -1,8 +1,8 @@
-import Layout from './components/Layout.jsx';
-import Section from './components/Section.jsx';
-import Row from './components/Row.jsx';
-import Col from './components/Col.jsx';
+import Layout from './components/Layout';
+import Section from './components/Section';
+import Row from './components/Row';
+import Col from './components/Col';
 
-import './styles/main.scss';
+import './styles/main';
 
 export { Layout, Section, Row, Col };

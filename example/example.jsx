@@ -2,7 +2,7 @@
 
 import React from "react";
 import ReactDOM from 'react-dom';
-import { Layout, Section, Row, Col } from "../src/ProperLayout.jsx";
+import { Layout, Section, Row, Col } from "../src/ProperLayout";
 
 let main = document.createElement('div');
 main.id = 'main';
