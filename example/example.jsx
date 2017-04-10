@@ -77,6 +77,6 @@ const examples = {
 };
 
 ReactDOM.render(
-	examples.common,
+	examples.simple,
 	main
 );
