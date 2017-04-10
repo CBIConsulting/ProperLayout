@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Section from './Section.jsx';
+import Section from './Section';
 
 function Row(Section) {
 	return class Row extends Component {

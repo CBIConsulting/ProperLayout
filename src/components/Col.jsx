@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Section from './Section.jsx';
+import Section from './Section';
 
 function Col(Section) {
 	return class Col extends Component {
@@ -10,7 +10,7 @@ function Col(Section) {
 				'We reacomend to use <Section> instead, which will work with the same props.'
 			);
 		}
-		
+
 		render() {
 			return (
 				<Section {...this.props} />
