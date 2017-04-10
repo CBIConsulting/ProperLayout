@@ -11,7 +11,8 @@ class Layout extends Component {
 			key: 'layout--' + shortid.generate(),
 			className: 'layout',
 			children: null,
-			isChildFixed: null
+			isChildFixed: null,
+			adjustTimeout: null
 		};
 
 		this.evaluateClasses = this.evaluateClasses.bind(this);
@@ -114,11 +115,40 @@ class Layout extends Component {
 
 	// Handles page resizing
 	handleResize() {
+		// Update children when at least one has fixed size
 		if (this.state.isChildFixed) {
 			this.setState(() => ({
 				...this.state,
 				children: this.updateChildren()
-			}));
+			}), () => {
+				// Get last rendered values to readjust children
+				let parent = this.props.type === 'columns'
+					? this.node.offsetWidth
+					: this.node.offsetHeight;
+				let children = 0;
+
+				this.node.childNodes.forEach(child => {
+					children += this.props.type === 'columns'
+					? child.offsetWidth
+					: child.offsetHeight;
+				});
+
+				// Adjusting children with a timeout,
+				// so it will update only the last time
+				if (parent !== children) {
+					clearTimeout(this.state.adjustTimeout);
+
+					this.setState(() => ({
+						...this.state,
+						adjustTimeout: setTimeout(() => {
+							this.setState(() => ({
+								...this.state,
+								children: this.updateChildren()
+							}));
+						}, 200)
+					}));
+				}
+			});
 		}
 	}
 
@@ -150,6 +180,11 @@ class Layout extends Component {
 
 		// Setting size for elements without custom sizes
 		let autoSize = parseFloat((freeSpace * 100 / totalSpace / counter).toFixed(2));
+
+		// Avoid negative autoSizes so it wont push siblings over it
+		if (autoSize < 0) {
+			autoSize = 0;
+		}
 
 		return { autoSize, totalSpace	};
 	}

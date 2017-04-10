@@ -110,8 +110,7 @@ class Section extends Component {
 				key={this.state.key}
 				style={styles}
 				className={this.state.className}>
-					{this.props.children}
-					{this.props.index + 1}
+					{this.props.children || this.props.index + 1}
 			</div>
 		);
 	}

@@ -15,7 +15,13 @@ const examples = {
 			<Section />
 		</Layout>
 	),
-	fixed: (
+	fixedRow: (
+		<Layout type='rows'>
+			<Section size='300px'/>
+			<Section />
+		</Layout>
+	),
+	fixedCol: (
 		<Layout>
 			<Section size='300px'/>
 			<Section />
@@ -55,9 +61,9 @@ const examples = {
 						<Layout type='rows' mode='spaced'>
 							<Section>
 								<Layout mode='spaced'>
+									<Section size='300px' />
 									<Section />
-									<Section />
-									<Section />
+									<Section size='300px' />
 								</Layout>
 							</Section>
 							<Section />
