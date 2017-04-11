@@ -5,7 +5,7 @@ import Section from '../src/components/Section';
 describe('<Section />', () => {
 	const wrapper = shallow(<Section />);
 
-	it("is a <div>", () => {
+	it("returns a <div>", () => {
 		expect(wrapper.is('div')).toBe(true);
 	});
 

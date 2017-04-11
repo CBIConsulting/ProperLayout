@@ -4,7 +4,8 @@
   "description": "A Proper Layout component",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.example.js --inline --hot --content-base ./example",
-    "build": "webpack && webpack --config webpack.config.example.js"
+    "build": "webpack && webpack --config webpack.config.example.js",
+		"test": "karma start"
   },
   "repository": {
     "type": "git",

@@ -98,19 +98,23 @@ class Layout extends Component {
 	// Check if there is a child with fixed size
 	// (this prevents re-rendering when all sections are responsive)
 	isChildFixed() {
-		return Children.map(this.props.children, child => {
-			let props = child.props;
+		if (Children.count()) {
+			return Children.map(this.props.children, child => {
+				let props = child.props;
 
-			if (props.size && this.evaluateSizeType(props.size) == 'pixel') {
-				return true;
-			} else if (props.gravity === -1) {
-				if (props.width || props.height) {
+				if (props.size && this.evaluateSizeType(props.size) == 'pixel') {
 					return true;
+				} else if (props.gravity === -1) {
+					if (props.width || props.height) {
+						return true;
+					}
+				} else {
+					return false;
 				}
-			} else {
-				return false;
-			}
-		}).some(child => child);
+			}).some(child => child);
+		} else {
+			return false;
+		}
 	}
 
 	// Handles page resizing

@@ -73,10 +73,13 @@ const examples = {
 				</Layout>
 			</Section>
 		</Layout>
+	),
+	singleLayout: (
+		<Layout />
 	)
 };
 
 ReactDOM.render(
-	examples.simple,
+	examples.singleLayout,
 	main
 );
