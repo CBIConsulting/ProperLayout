@@ -98,7 +98,7 @@ class Layout extends Component {
 	// Check if there is a child with fixed size
 	// (this prevents re-rendering when all sections are responsive)
 	isChildFixed() {
-		if (Children.count()) {
+		if (Children.count(this.props.children)) {
 			return Children.map(this.props.children, child => {
 				let props = child.props;
 

@@ -1,20 +1,20 @@
 'use strict';
 
-import React from "react";
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { Layout, Section, Row, Col } from "../src/ProperLayout";
+import { Layout, Section, Row, Col } from '../src/ProperLayout';
 
 let main = document.createElement('div');
 main.id = 'main';
 document.body.appendChild(main);
 
-const examples = {
+const cases = {
 	simple: (
 		<Layout>
 			<Section />
 			<Section />
 		</Layout>
-	),
+		),
 	fixedRow: (
 		<Layout type='rows'>
 			<Section size='300px'/>
@@ -76,10 +76,15 @@ const examples = {
 	),
 	singleLayout: (
 		<Layout />
+	),
+	singleSection: (
+		<Section />
 	)
 };
 
 ReactDOM.render(
-	examples.singleLayout,
+	cases.simple,
 	main
 );
+
+export default cases;
