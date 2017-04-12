@@ -116,6 +116,13 @@ class Section extends Component {
 	}
 }
 
+Section.defaultProps = {
+	type: 'columns',
+	mode: 'default',
+	position: '0%',
+	index: 0
+};
+
 Section.propTypes = {
 	type: PropTypes.oneOf(['columns', 'rows']),
 	mode: PropTypes.oneOf(['default', 'spaced']),
@@ -123,7 +130,8 @@ Section.propTypes = {
 	position: PropTypes.string,
 	gravity: PropTypes.number,
 	width: PropTypes.number,
-	height: PropTypes.number
+	height: PropTypes.number,
+	index: PropTypes.number
 };
 
 export default Section;
