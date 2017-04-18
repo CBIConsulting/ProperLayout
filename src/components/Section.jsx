@@ -18,7 +18,7 @@ class Section extends Component {
 		this.warnDeprecatedProps = this.warnDeprecatedProps.bind(this);
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.warnDeprecatedProps();
 
 		let { width, height } = this.calculateDimensions();
@@ -95,8 +95,7 @@ class Section extends Component {
 	render() {
 		let styles = {
 			width: this.state.width,
-			height: this.state.height,
-			border: this.props.mode === 'default' ? '1px solid blue' : '1px dashed blue'
+			height: this.state.height
 		};
 
 		if (this.props.type === 'columns') {

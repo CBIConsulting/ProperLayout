@@ -1,3 +1,5 @@
+'use strict';
+
 import Layout from './components/Layout';
 import Section from './components/Section';
 import Row from './components/Row';

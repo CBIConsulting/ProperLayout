@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import Section from '../src/components/Section';
+import { Section } from '../src/ProperLayout';
 
 describe('Shallow <Section />', () => {
 	const wrapper = shallow(<Section />);
@@ -63,10 +63,6 @@ describe("Mounted <Section />", () => {
 
 	it("has style.height='100%'", () => {
 		expect(styles.height).toBe('100%');
-	});
-
-	it("has style.border='1px solid blue'", () => {
-		expect(styles.border).toBe('1px solid blue');
 	});
 
 	it("has style.left='0%'", () => {

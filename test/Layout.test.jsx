@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import Layout from '../src/components/Layout';
+import { Layout } from '../src/ProperLayout';
 
 describe('Shallow <Layout />', () => {
 	const wrapper = shallow(<Layout />);

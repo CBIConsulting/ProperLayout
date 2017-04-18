@@ -79,6 +79,20 @@ const cases = {
 	),
 	singleSection: (
 		<Section />
+	),
+	tenColumns: (
+		<Layout>
+			<Section />
+			<Section />
+			<Section size='20px'/>
+			<Section />
+			<Section />
+			<Section />
+			<Section />
+			<Section />
+			<Section />
+			<Section />
+		</Layout>
 	)
 };
 

@@ -1,11 +1,9 @@
 'use strict';
 
 import React from 'react';
-import { mount, render } from 'enzyme';
-import Layout from '../src/components/Layout';
-import Section from '../src/components/Section';
-// import Col from '../src/components/Col';
-// import Row from '../src/components/Row';
+import { mount } from 'enzyme';
+import { Layout, Section } from '../src/ProperLayout';
+import '../src/styles/main.scss';
 
 describe("Mounted Simple Layout with Two Sections", () => {
 	const wrapper = mount(
@@ -14,12 +12,10 @@ describe("Mounted Simple Layout with Two Sections", () => {
 			<Section />
 		</Layout>
 	);
-	const sections = wrapper.children();
-	const children = wrapper.state('children');
 
-	it("should Layout.props.children should be length 2", () => {
-		expect(children.length).toBe(2);
-	});
+	const sections = wrapper.find(Section);
+	// const instance = wrapper.instance();
+
 
 	it("should render two inner Section divs", () => {
 		expect(sections.length).toBe(2);
@@ -32,8 +28,8 @@ describe("Mounted Simple Layout with Two Sections", () => {
 
 	it("should have two inner Sections with width='50%'", () => {
 		sections.forEach(node => {
-			// expect(node.prop('size')).toBe('50%');
-			expect(node.mount().state('width')).toBe('50%');
+			// console.log(node.getDOMNode().offsetHeight);
+			expect(node.props().position).toBe('50%');
 		});
 	});
 });

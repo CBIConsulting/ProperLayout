@@ -25,6 +25,8 @@ class Layout extends Component {
 	}
 
 	componentDidMount() {
+		// This needs to be done here because Layout should render once for
+		// accesing its node and get dimensions to render children
 		this.setState(() => ({
 			...this.state,
 			className: this.evaluateClasses(),
@@ -183,7 +185,8 @@ class Layout extends Component {
 		});
 
 		// Setting size for elements without custom sizes
-		let autoSize = parseFloat((freeSpace * 100 / totalSpace / counter).toFixed(2));
+		// let autoSize = parseFloat((freeSpace * 100 / totalSpace / counter).toFixed(2));
+		let autoSize = freeSpace * 100 / totalSpace / counter;
 
 		// Avoid negative autoSizes so it wont push siblings over it
 		if (autoSize < 0) {
@@ -212,7 +215,9 @@ class Layout extends Component {
 				props.position = nextPosition + '%';
 
 				if (sizeType === 'pixel') {
-					nextPosition += parseFloat((parsedSize * 100 / totalSpace).toFixed(2));
+					// nextPosition += parseFloat((parsedSize * 100 / totalSpace).toFixed(2));
+					nextPosition += parsedSize * 100 / totalSpace;
+
 				} else if (sizeType === 'percent') {
 					nextPosition += parsedSize;
 				}
@@ -231,6 +236,7 @@ class Layout extends Component {
 		return (
 			<div
 				key={this.state.key}
+				style={{width: '100%', height: '100%'}}
 				ref={node => this.node = node}
 				className={this.state.className}>
 					{this.state.children}
