@@ -1,10 +1,18 @@
-
 html, body, #main {
+	box-sizing: border-box;
 	width: 100%;
 	height: 100%;
+	border: 0;
 	margin: 0;
 	padding: 0;
+	background: steelblue;
+}
+
+.layout, .section {
+	box-sizing: border-box;
 	border: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .layout {
@@ -17,14 +25,7 @@ html, body, #main {
 .section {
 	position: absolute;
 	overflow: hidden;
-}
-
-.layout, .section {
-	box-sizing: border-box;
-	background-color: transparent;
-	border: 0;
-	margin: 0;
-	padding: 0;
+	border: 1px solid blue;
 }
 
 // layout type
@@ -46,6 +47,7 @@ html, body, #main {
 // --- spaced
 .layout.spaced {
 	>.section {
+		border: 1px dashed blue;
 		margin: 16px 8px;
 	}
 }
