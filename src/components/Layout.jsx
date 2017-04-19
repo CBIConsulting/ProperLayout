@@ -1,6 +1,7 @@
 'use strict';
 
-import React, { Component, PropTypes, Children } from 'react';
+import React, { Component, Children } from 'react';
+import PropTypes  from 'prop-types';
 import shortid from 'shortid';
 
 class Layout extends Component {
@@ -22,6 +23,7 @@ class Layout extends Component {
 		this.calculateAutoSize = this.calculateAutoSize.bind(this);
 		this.updateChildren = this.updateChildren.bind(this);
 		this.handleResize = this.handleResize.bind(this);
+		this.getDimensions = this.getDimensions.bind(this);
 	}
 
 	componentDidMount() {
@@ -64,14 +66,16 @@ class Layout extends Component {
 
 	// Returns size type received in child props
 	evaluateSizeType(size) {
-		let pixel = /^\d+(?:\.\d+)?px$/;
 		let percent = /^\d+(?:\.\d+)?%$/;
 
-		if (pixel.test(size)) {
-			return 'pixel';
-		} else if (percent.test(size)) {
+		// let pixel = /^\d+(?:\.\d+)?px$/;
+		// if (pixel.test(size)) {
+
+		if (percent.test(size)) {
 			return 'percent';
 		}
+
+		return 'pixel';
 	}
 
 	// Evaluate child props to convert deprecated gravity, width, height to size
@@ -80,21 +84,21 @@ class Layout extends Component {
 
 		if (props.size) {
 			return props;
-		} else {
-			if (props.width && this.props.type === 'columns') {
-				props.size = parseFloat(props.width) + 'px';
-			}
-
-			if (props.height && this.props.type === 'rows') {
-				props.size = parseFloat(props.height) + 'px';
-			}
-
-			if (props.gravity >= 0 && props.gravity <= 1) {
-				props.size = 100 * props.gravity + '%';
-			}
-
-			return props;
 		}
+
+		if (props.width && this.props.type === 'columns') {
+			props.size = parseFloat(props.width) + 'px';
+		}
+
+		if (props.height && this.props.type === 'rows') {
+			props.size = parseFloat(props.height) + 'px';
+		}
+
+		if (props.gravity >= 0 && props.gravity <= 1) {
+			props.size = 100 * props.gravity + '%';
+		}
+
+		return props;
 	}
 
 	// Check if there is a child with fixed size
@@ -106,17 +110,17 @@ class Layout extends Component {
 
 				if (props.size && this.evaluateSizeType(props.size) == 'pixel') {
 					return true;
-				} else if (props.gravity === -1) {
-					if (props.width || props.height) {
-						return true;
-					}
-				} else {
-					return false;
 				}
+
+				if (props.gravity === -1 && (props.width || props.height)) {
+					return true;
+				}
+
+				return false;
 			}).some(child => child);
-		} else {
-			return false;
 		}
+
+		return false;
 	}
 
 	// Handles page resizing
@@ -129,14 +133,14 @@ class Layout extends Component {
 			}), () => {
 				// Get last rendered values to readjust children
 				let parent = this.props.type === 'columns'
-					? this.node.offsetWidth
-					: this.node.offsetHeight;
+					? this.getDimensions(this.node).width
+					: this.getDimensions(this.node).height;
 				let children = 0;
 
 				this.node.childNodes.forEach(child => {
 					children += this.props.type === 'columns'
-					? child.offsetWidth
-					: child.offsetHeight;
+					? this.getDimensions(child).width
+					: this.getDimensions(child).height;
 				});
 
 				// Adjusting children with a timeout,
@@ -158,12 +162,22 @@ class Layout extends Component {
 		}
 	}
 
+	// Return rendered width and height from a node
+	getDimensions(node) {
+		let dimensions = node.getBoundingClientRect();
+
+		return {
+			width: dimensions.width,
+			height: dimensions.height
+		};
+	}
+
 	// Calculates and returns size for elements without custom sizes
 	calculateAutoSize() {
 		let counter = 0;
 		let totalSpace = this.props.type === 'columns'
-			? this.node.offsetWidth
-			: this.node.offsetHeight;
+			? this.getDimensions(this.node).width
+			: this.getDimensions(this.node).height;
 		let freeSpace = totalSpace;
 
 		Children.forEach(this.props.children, (child, index) => {
