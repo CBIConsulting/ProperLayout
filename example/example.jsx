@@ -97,7 +97,7 @@ const cases = {
 };
 
 ReactDOM.render(
-	cases.simple,
+	cases.rows,
 	main
 );
 
