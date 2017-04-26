@@ -6,14 +6,14 @@ import { Layout, Section, Row, Col } from '../src/ProperLayout';
 import '../src/styles/main.scss';
 
 describe('ProperLayout', () => {
-	let main = document.createElement('div');
-	main.id = 'main';
-	document.body.appendChild(main);
-
 	describe("mounted Simple Layout:", () => {
 		let wrapper, sections, firstSection, secondSection;
 
 		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			document.body.appendChild(main);
+
 			wrapper = mount(
 				<Layout>
 					<Section />
@@ -27,6 +27,11 @@ describe('ProperLayout', () => {
 			sections = wrapper.children();
 			firstSection = wrapper.childAt(0);
 			secondSection = wrapper.childAt(1);
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
 		});
 
 		it("should render two inner Section divs", () => {
@@ -116,6 +121,10 @@ describe('ProperLayout', () => {
 		let wrapper, sections, firstSection, secondSection;
 
 		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			document.body.appendChild(main);
+
 			wrapper = mount(
 				<Layout type='rows'>
 					<Section />
@@ -129,6 +138,11 @@ describe('ProperLayout', () => {
 			sections = wrapper.children();
 			firstSection = wrapper.childAt(0);
 			secondSection = wrapper.childAt(1);
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
 		});
 
 		// props -> type, size, position
@@ -202,6 +216,10 @@ describe('ProperLayout', () => {
 		let wrapper, sections;
 
 		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			document.body.appendChild(main);
+
 			wrapper = mount(
 				<Layout mode='spaced'>
 					<Section />
@@ -213,6 +231,11 @@ describe('ProperLayout', () => {
 			);
 
 			sections = wrapper.children();
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
 		});
 
 		// props -> mode
@@ -269,6 +292,10 @@ describe('ProperLayout', () => {
 		let wrapper, sections;
 
 		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			document.body.appendChild(main);
+
 			wrapper = mount(
 				<Layout type='rows' mode='spaced'>
 					<Section />
@@ -280,6 +307,11 @@ describe('ProperLayout', () => {
 			);
 
 			sections = wrapper.children();
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
 		});
 
 		// state -> width, height
@@ -319,6 +351,10 @@ describe('ProperLayout', () => {
 		let wrapper, cols, firstCol, secondCol;
 
 		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			document.body.appendChild(main);
+
 			wrapper = mount(
 				<Layout>
 					<Col />
@@ -332,6 +368,11 @@ describe('ProperLayout', () => {
 			cols = wrapper.children();
 			firstCol = wrapper.childAt(0);
 			secondCol = wrapper.childAt(1);
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
 		});
 
 		// props -> type, mode, position, size
@@ -411,6 +452,10 @@ describe('ProperLayout', () => {
 		let wrapper, rows, firstRow, secondRow;
 
 		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			document.body.appendChild(main);
+
 			wrapper = mount(
 				<Layout type='rows'>
 					<Row />
@@ -424,6 +469,11 @@ describe('ProperLayout', () => {
 			rows = wrapper.children();
 			firstRow = wrapper.childAt(0);
 			secondRow = wrapper.childAt(1);
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
 		});
 
 		// props -> type, mode, position, size
@@ -496,6 +546,288 @@ describe('ProperLayout', () => {
 			let styles = secondRow.find('div.section').node.style;
 
 			expect(styles.top).to.equal('50%');
+		});
+	});
+
+	describe("Mounted Simple Layout with Section fixed size in  px", () => {
+		let wrapper, firstSection, secondSection;
+
+		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			main.setAttribute('style', 'width: 1000px; height: 1000px');
+			document.body.appendChild(main);
+
+			wrapper = mount(
+				<Layout>
+					<Section />
+					<Section size='300px'/>
+				</Layout>,
+				{
+					attachTo: main
+				}
+			);
+
+			firstSection = wrapper.childAt(0);
+			secondSection = wrapper.childAt(1);
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
+		});
+
+		// props -> size, position
+
+		it("first Section should have props.size='70%'", () => {
+			expect(firstSection.node.props.size).to.equal('70%');
+		});
+
+		it("second Section should have props.size='300px'", () => {
+			expect(secondSection.node.props.size).to.equal('300px');
+		});
+
+		it("first Section should have props.position='0%'", () => {
+			expect(firstSection.node.props.position).to.equal('0%');
+		});
+
+		it("second Section should have props.position='70%'", () => {
+			expect(secondSection.node.props.position).to.equal('70%');
+		});
+	});
+
+	describe("Mounted Simple Layout with type='rows' and Section fixed size in px", () => {
+		let wrapper, firstSection, secondSection;
+
+		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			main.setAttribute('style', 'width: 1000px; height: 1000px');
+			document.body.appendChild(main);
+
+			wrapper = mount(
+				<Layout type='rows'>
+					<Section />
+					<Section size='300px'/>
+				</Layout>,
+				{
+					attachTo: main
+				}
+			);
+
+			firstSection = wrapper.childAt(0);
+			secondSection = wrapper.childAt(1);
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
+		});
+
+		// props -> size, position
+
+		it("first Section should have props.size='70%'", () => {
+			expect(firstSection.node.props.size).to.equal('70%');
+		});
+
+		it("second Section should have props.size='300px'", () => {
+			expect(secondSection.node.props.size).to.equal('300px');
+		});
+
+		it("first Section should have props.position='0%'", () => {
+			expect(firstSection.node.props.position).to.equal('0%');
+		});
+
+		it("second Section should have props.position='70%'", () => {
+			expect(secondSection.node.props.position).to.equal('70%');
+		});
+	});
+
+	describe("Mounted Simple Layout with Section fixed size in %", () => {
+		let wrapper, firstSection, secondSection;
+
+		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			main.setAttribute('style', 'width: 1000px; height: 1000px');
+			document.body.appendChild(main);
+
+			wrapper = mount(
+				<Layout>
+					<Section />
+					<Section size='30%'/>
+				</Layout>,
+				{
+					attachTo: main
+				}
+			);
+
+			firstSection = wrapper.childAt(0);
+			secondSection = wrapper.childAt(1);
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
+		});
+
+		// props -> size, position
+
+		it("first Section should have props.size='70%'", () => {
+			expect(firstSection.node.props.size).to.equal('70%');
+		});
+
+		it("second Section should have props.size='30%'", () => {
+			expect(secondSection.node.props.size).to.equal('30%');
+		});
+
+		it("first Section should have props.position='0%'", () => {
+			expect(firstSection.node.props.position).to.equal('0%');
+		});
+
+		it("second Section should have props.position='70%'", () => {
+			expect(secondSection.node.props.position).to.equal('70%');
+		});
+	});
+
+	describe("Mounted Simple Layout with Section gravity=0.3", () => {
+		let wrapper, firstSection, secondSection;
+
+		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			main.setAttribute('style', 'width: 1000px; height: 1000px');
+			document.body.appendChild(main);
+
+			wrapper = mount(
+				<Layout>
+					<Section />
+					<Section gravity={0.3} />
+				</Layout>,
+				{
+					attachTo: main
+				}
+			);
+
+			firstSection = wrapper.childAt(0);
+			secondSection = wrapper.childAt(1);
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
+		});
+
+		// props -> size, position
+
+		it("first Section should have props.size='70%'", () => {
+			expect(firstSection.node.props.size).to.equal('70%');
+		});
+
+		it("second Section should have props.size='30%'", () => {
+			expect(secondSection.node.props.size).to.equal('30%');
+		});
+
+		it("first Section should have props.position='0%'", () => {
+			expect(firstSection.node.props.position).to.equal('0%');
+		});
+
+		it("second Section should have props.position='70%'", () => {
+			expect(secondSection.node.props.position).to.equal('70%');
+		});
+	});
+
+	describe("Mounted Simple Layout with Section gravity=-1 and width=300", () => {
+		let wrapper, firstSection, secondSection;
+
+		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			main.setAttribute('style', 'width: 1000px; height: 1000px');
+			document.body.appendChild(main);
+
+			wrapper = mount(
+				<Layout>
+					<Section />
+					<Section gravity={-1} width={300}/>
+				</Layout>,
+				{
+					attachTo: main
+				}
+			);
+
+			firstSection = wrapper.childAt(0);
+			secondSection = wrapper.childAt(1);
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
+		});
+
+		// props -> size, position
+
+		it("first Section should have props.size='70%'", () => {
+			expect(firstSection.node.props.size).to.equal('70%');
+		});
+
+		it("second Section should have props.size='300px'", () => {
+			expect(secondSection.node.props.size).to.equal('300px');
+		});
+
+		it("first Section should have props.position='0%'", () => {
+			expect(firstSection.node.props.position).to.equal('0%');
+		});
+
+		it("second Section should have props.position='70%'", () => {
+			expect(secondSection.node.props.position).to.equal('70%');
+		});
+	});
+
+	describe("Mounted Simple Layout with Section gravity=-1 and height=300", () => {
+		let wrapper, firstSection, secondSection;
+
+		beforeEach(() => {
+			let main = document.createElement('div');
+			main.id = 'main';
+			main.setAttribute('style', 'width: 1000px; height: 1000px');
+			document.body.appendChild(main);
+
+			wrapper = mount(
+				<Layout type='rows'>
+					<Section />
+					<Section gravity={-1} height={300}/>
+				</Layout>,
+				{
+					attachTo: main
+				}
+			);
+
+			firstSection = wrapper.childAt(0);
+			secondSection = wrapper.childAt(1);
+		});
+
+		afterEach(() => {
+			let main = document.getElementById('main');
+			document.body.removeChild(main);
+		});
+
+		// props -> size, position
+
+		it("first Section should have props.size='70%'", () => {
+			expect(firstSection.node.props.size).to.equal('70%');
+		});
+
+		it("second Section should have props.size='300px'", () => {
+			expect(secondSection.node.props.size).to.equal('300px');
+		});
+
+		it("first Section should have props.position='0%'", () => {
+			expect(firstSection.node.props.position).to.equal('0%');
+		});
+
+		it("second Section should have props.position='70%'", () => {
+			expect(secondSection.node.props.position).to.equal('70%');
 		});
 	});
 });
