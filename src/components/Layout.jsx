@@ -61,6 +61,10 @@ class Layout extends Component {
       className += ' spaced'
     }
 
+    if (this.props.borders) {
+      className += ' borders'
+    }
+
     return className
   }
 
@@ -215,6 +219,7 @@ class Layout extends Component {
 
       props.type = this.props.type
       props.mode = this.props.mode
+      props.borders = this.props.borders
       props.index = index
 
       if (props.size) {
@@ -255,7 +260,8 @@ class Layout extends Component {
 Layout.defaultProps = {
   type: 'columns',
   mode: 'default',
-  direction: 'default'
+  direction: 'default',
+  borders: false
 }
 
 Layout.propTypes = {

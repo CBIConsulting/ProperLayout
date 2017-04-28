@@ -7,10 +7,7 @@ import { Layout, Section, Row, Col } from '../src/ProperLayout'
 let main = document.createElement('div')
 main.id = 'main'
 document.body.appendChild(main)
-/**
- * [style description]
- * @type {Object}
- */
+
 class Content extends React.Component {
   render () {
     return (
@@ -31,10 +28,7 @@ class Content extends React.Component {
     )
   }
 }
-/**
- * [cases description]
- * @type {Object}
- */
+
 const cases = {
   simple: (
     <Layout>
@@ -128,11 +122,23 @@ const cases = {
         <Content />
       </Section>
     </Layout>
+  ),
+  borders: (
+    <Layout borders>
+      <Section />
+      <Section />
+    </Layout>
+  ),
+  spacedBorders: (
+    <Layout mode='spaced' borders>
+      <Section />
+      <Section />
+    </Layout>
   )
 }
 
 ReactDOM.render(
-  cases.withContent,
+  cases.common,
   main
 )
 
