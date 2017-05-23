@@ -1,69 +1,62 @@
-html, body, #main {
-	box-sizing: border-box;
-	width: 100%;
-	height: 100%;
-	border: 0;
-	margin: 0;
-	padding: 0;
-}
+.ProperLayout {
+	.layout, .section {
+		box-sizing: border-box;
+		border: 0;
+		margin: 0;
+		padding: 0;
+	}
 
-.layout, .section {
-	box-sizing: border-box;
-	border: 0;
-	margin: 0;
-	padding: 0;
-}
+	.layout {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
 
-.layout {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
+	  &.columns {
+	  	>.section {
+	  		display: inline-block;
+	  	}
+	  }
 
-  &.columns {
-  	>.section {
-  		display: inline-block;
-  	}
-  }
+	  &.rows {
+	  	>.section {
+	  		display: block;
+	  	}
+	  }
 
-  &.rows {
-  	>.section {
-  		display: block;
-  	}
-  }
+	  &.spaced {
+	  	>.section {
+	  		margin: 16px 8px;
+	  	}
+	  }
 
-  &.spaced {
-  	>.section {
-  		margin: 16px 8px;
-  	}
-  }
+	  &.borders {
+	    >.section {
+	      border: 1px solid #333;
+	    }
 
-  &.borders {
-    >.section {
-      border: 1px solid #333;
-    }
+	    &.spaced {
+	      >.section {
+	        border: 1px dashed #333;
+	      }
+	    }
+	  }
+	}
 
-    &.spaced {
-      >.section {
-        border: 1px dashed #333;
-      }
-    }
-  }
-}
+	.section {
+		position: absolute;
+		overflow: hidden;
+	}
 
-.section {
-	position: absolute;
-	overflow: hidden;
-}
+	// flex-direction (currently, after reverse some sections separate by one pixel)
+	// --- reverse
+	.layout.columns.reverse {
+		direction: rtl;
+	}
 
-// flex-direction (currently, after reverse some sections separate by one pixel)
-// --- reverse
-.layout.columns.reverse {
-	direction: rtl;
-}
-
-.layout.rows.reverse, .layout.rows.reverse > .section {
-	transform: scaleY(-1);
-	-ms-transform: scaleY(-1);
-	-webkit-transform: scaleY(-1);
+	.layout.rows.reverse, .layout.rows.reverse > .section {
+		transform: scaleY(-1);
+		-ms-transform: scaleY(-1);
+		-webkit-transform: scaleY(-1);
+	}
 }
