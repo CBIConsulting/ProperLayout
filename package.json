@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.example.js --inline --hot --content-base ./example",
     "build": "webpack --config webpack.config.example.js",
-    "test": "karma start"
+    "test": "node_modules/.bin/karma start --single-run",
+    "tdd": "node_modules/.bin/karma start"
   },
   "repository": {
     "type": "git",
