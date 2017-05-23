@@ -1,6 +1,6 @@
 'use strict'
 
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Layout, Section, Row, Col } from '../src/ProperLayout'
 
@@ -125,7 +125,8 @@ const cases = {
   ),
   borders: (
     <Layout borders>
-      <Section />
+      <Section size='400px'>
+      </Section>
       <Section />
     </Layout>
   ),
@@ -137,8 +138,34 @@ const cases = {
   )
 }
 
+class Borders extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      size: '20%'
+    }
+  }
+
+  render () {
+    return (
+      <Layout borders>
+        <Section size={this.state.size}>
+          <button onClick={() => {
+            this.setState({
+              size: '40%'
+            })
+          }}>
+            click
+          </button>
+        </Section>
+        <Section />
+      </Layout>
+    )
+  }
+}
+
 ReactDOM.render(
-  cases.common,
+  <Borders />,
   main
 )
 

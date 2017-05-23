@@ -39,6 +39,13 @@ class Layout extends Component {
     window.addEventListener('resize', this.handleResize)
   }
 
+  componentWillReceiveProps (nextProps) {
+    this.setState(() => ({
+      ...this.state,
+      children: this.updateChildren(nextProps)
+    }))
+  }
+
   componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize)
   }
@@ -210,23 +217,23 @@ class Layout extends Component {
   }
 
   // Updating children props for positioning
-  updateChildren () {
+  updateChildren (props = this.props) {
     let {autoSize, totalSpace} = this.calculateAutoSize()
     let nextPosition = 0
 
-    return Children.map(this.props.children, (child, index) => {
-      let props = this.evaluateDeprecatedProps(child)
+    return Children.map(props.children, (child, index) => {
+      let childrenProps = this.evaluateDeprecatedProps(child)
 
-      props.type = this.props.type
-      props.mode = this.props.mode
-      props.borders = this.props.borders
-      props.index = index
+      childrenProps.type = props.type
+      childrenProps.mode = props.mode
+      childrenProps.borders = props.borders
+      childrenProps.index = index
 
-      if (props.size) {
-        let sizeType = this.evaluateSizeType(props.size)
-        let parsedSize = parseFloat(props.size)
+      if (childrenProps.size) {
+        let sizeType = this.evaluateSizeType(childrenProps.size)
+        let parsedSize = parseFloat(childrenProps.size)
 
-        props.position = nextPosition + '%'
+        childrenProps.position = nextPosition + '%'
 
         if (sizeType === 'pixel') {
           nextPosition += parsedSize * 100 / totalSpace
@@ -234,13 +241,13 @@ class Layout extends Component {
           nextPosition += parsedSize
         }
       } else {
-        props.size = autoSize + '%'
-        props.position = nextPosition + '%'
+        childrenProps.size = autoSize + '%'
+        childrenProps.position = nextPosition + '%'
 
         nextPosition += autoSize
       }
 
-      return React.cloneElement(child, props)
+      return React.cloneElement(child, childrenProps)
     })
   }
 
