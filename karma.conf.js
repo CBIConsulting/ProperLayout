@@ -58,7 +58,7 @@ module.exports = function(config) {
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers: ['PhantomJS', 'Chrome'], // Usually PhantomJS and Chrome
+		browsers: ['PhantomJS'/*, 'Chrome'*/], // Usually PhantomJS and Chrome
 
 
 		// Continuous Integration mode
@@ -67,7 +67,7 @@ module.exports = function(config) {
 
 		// Concurrency level
 		// how many browser should be started simultaneous
-		concurrency: Infinity,
+		concurrency: 1,
 		webpack: require('./webpack.config.example.js'),
 		webpackMiddleware: {
 			stats: 'errors-only'
