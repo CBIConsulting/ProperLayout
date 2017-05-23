@@ -1725,7 +1725,7 @@ class Layout extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
         ref: node => {
           this.node = node;
         },
-        className: 'ProperLayout' + this.state.className },
+        className: 'ProperLayout ' + this.state.className },
       this.state.children
     );
   }

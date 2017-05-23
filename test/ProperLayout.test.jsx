@@ -13,7 +13,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       document.body.appendChild(main)
 
       wrapper = mount(
@@ -32,7 +32,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -124,7 +124,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       document.body.appendChild(main)
 
       wrapper = mount(
@@ -143,7 +143,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -219,7 +219,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       document.body.appendChild(main)
 
       wrapper = mount(
@@ -236,7 +236,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -295,7 +295,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       document.body.appendChild(main)
 
       wrapper = mount(
@@ -312,7 +312,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -354,7 +354,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       document.body.appendChild(main)
 
       wrapper = mount(
@@ -373,7 +373,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -455,7 +455,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       document.body.appendChild(main)
 
       wrapper = mount(
@@ -474,7 +474,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -556,7 +556,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       main.setAttribute('style', 'width: 1000px; height: 1000px')
       document.body.appendChild(main)
 
@@ -575,7 +575,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -603,7 +603,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       main.setAttribute('style', 'width: 1000px; height: 1000px')
       document.body.appendChild(main)
 
@@ -622,7 +622,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -650,7 +650,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       main.setAttribute('style', 'width: 1000px; height: 1000px')
       document.body.appendChild(main)
 
@@ -669,7 +669,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -697,7 +697,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       main.setAttribute('style', 'width: 1000px; height: 1000px')
       document.body.appendChild(main)
 
@@ -716,7 +716,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -744,7 +744,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       main.setAttribute('style', 'width: 1000px; height: 1000px')
       document.body.appendChild(main)
 
@@ -763,7 +763,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -791,7 +791,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       main.setAttribute('style', 'width: 1000px; height: 1000px')
       document.body.appendChild(main)
 
@@ -810,7 +810,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -838,7 +838,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       main.setAttribute('style', 'width: 1000px; height: 1000px')
       document.body.appendChild(main)
 
@@ -856,7 +856,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 
@@ -887,7 +887,7 @@ describe('ProperLayout:', () => {
 
     beforeEach(() => {
       let main = document.createElement('div')
-      main.id = 'main'
+      main.id = 'mainTestDiv'
       main.setAttribute('style', 'width: 1000px; height: 1000px')
       document.body.appendChild(main)
 
@@ -905,7 +905,7 @@ describe('ProperLayout:', () => {
     })
 
     afterEach(() => {
-      let main = document.getElementById('main')
+      let main = document.getElementById('mainTestDiv')
       document.body.removeChild(main)
     })
 

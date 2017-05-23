@@ -1,23 +1,34 @@
-.ProperLayout .layout, .ProperLayout .section {
+#mainTestDiv {
+  box-sizing: border-box;
+  width: 100%;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+.ProperLayout.layout, .ProperLayout .section {
   box-sizing: border-box;
   border: 0;
   margin: 0;
   padding: 0; }
 
-.ProperLayout .layout {
+.ProperLayout.layout {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden; }
-  .ProperLayout .layout.columns > .section {
+  .ProperLayout.layout.columns > .section {
     display: inline-block; }
-  .ProperLayout .layout.rows > .section {
+  .ProperLayout.layout.rows > .section {
     display: block; }
-  .ProperLayout .layout.spaced > .section {
+  .ProperLayout.layout.spaced > .section {
     margin: 16px 8px; }
-  .ProperLayout .layout.borders > .section {
+  .ProperLayout.layout.borders > .section {
     border: 1px solid #333; }
-  .ProperLayout .layout.borders.spaced > .section {
+  .ProperLayout.layout.borders.spaced > .section {
     border: 1px dashed #333; }
 
 .ProperLayout .section {
