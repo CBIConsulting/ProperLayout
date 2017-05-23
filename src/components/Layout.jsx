@@ -43,7 +43,9 @@ class Layout extends Component {
     this.setState(() => ({
       ...this.state,
       children: this.updateChildren(nextProps)
-    }))
+    }), () => {
+      this.handleResize()
+    })
   }
 
   componentWillUnmount () {
@@ -133,40 +135,40 @@ class Layout extends Component {
   // Handles page resizing
   handleResize () {
     // Update children when at least one has fixed size
-    if (this.state.isChildFixed) {
-      this.setState(() => ({
-        ...this.state,
-        children: this.updateChildren()
-      }), () => {
-        // Get last rendered values to readjust children
-        let parent = this.props.type === 'columns'
-          ? this.getDimensions(this.node).width
-          : this.getDimensions(this.node).height
-        let children = 0
+    // if (this.state.isChildFixed) {
+    this.setState(() => ({
+      ...this.state,
+      children: this.updateChildren()
+    }), () => {
+      // Get last rendered values to readjust children
+      let parent = this.props.type === 'columns'
+        ? this.getDimensions(this.node).width
+        : this.getDimensions(this.node).height
+      let children = 0
 
-        this.node.childNodes.forEach(child => {
-          children += this.props.type === 'columns'
-          ? this.getDimensions(child).width
-          : this.getDimensions(child).height
-        })
-
-        // Adjusting children with a timeout,
-        // so it will update only the last time
-        if (parent !== children) {
-          clearTimeout(this.state.adjustTimeout)
-
-          this.setState(() => ({
-            ...this.state,
-            adjustTimeout: setTimeout(() => {
-              this.setState(() => ({
-                ...this.state,
-                children: this.updateChildren()
-              }))
-            }, 200)
-          }))
-        }
+      this.node.childNodes.forEach(child => {
+        children += this.props.type === 'columns'
+        ? this.getDimensions(child).width
+        : this.getDimensions(child).height
       })
-    }
+
+      // Adjusting children with a timeout,
+      // so it will update only the last time
+      if (parent !== children) {
+        clearTimeout(this.state.adjustTimeout)
+
+        this.setState(() => ({
+          ...this.state,
+          adjustTimeout: setTimeout(() => {
+            this.setState(() => ({
+              ...this.state,
+              children: this.updateChildren()
+            }))
+          }, 200)
+        }))
+      }
+    })
+    // }
   }
 
   // Return rendered width and height from a node

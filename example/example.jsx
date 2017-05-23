@@ -125,8 +125,7 @@ const cases = {
   ),
   borders: (
     <Layout borders>
-      <Section size='400px'>
-      </Section>
+      <Section size='400px' />
       <Section />
     </Layout>
   ),
@@ -142,23 +141,36 @@ class Borders extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      size: '20%'
+      size1: '100px',
+      size2: '150px',
+      className: 'lololo'
     }
   }
 
   render () {
     return (
       <Layout borders>
-        <Section size={this.state.size}>
+        <Section size={this.state.size1}>
           <button onClick={() => {
             this.setState({
-              size: '40%'
+              size1: '200px',
+              size2: '300px',
+              className: 'lololo lalala'
             })
           }}>
             click
           </button>
         </Section>
-        <Section />
+        <Section size={this.state.size2}>
+          <button onClick={() => {
+            this.setState({
+              className: 'lalala'
+            })
+          }}>
+            click
+          </button>
+        </Section>
+        <Section className={this.state.className} />
       </Layout>
     )
   }

@@ -15,6 +15,7 @@ class Section extends PureComponent {
       height: null
     }
 
+    this.evaluateClasses = this.evaluateClasses.bind(this)
     this.calculateDimensions = this.calculateDimensions.bind(this)
     this.warnDeprecatedProps = this.warnDeprecatedProps.bind(this)
   }
@@ -26,6 +27,7 @@ class Section extends PureComponent {
 
     this.setState(() => ({
       ...this.state,
+      className: this.evaluateClasses(),
       width,
       height
     }))
@@ -36,9 +38,20 @@ class Section extends PureComponent {
 
     this.setState(() => ({
       ...this.state,
+      className: this.evaluateClasses(nextProps),
       width,
       height
     }))
+  }
+
+  evaluateClasses (props = this.props, state = this.state) {
+    state = this.state.className.split(' ')
+    props = props.className.split(' ')
+
+    let newClasses = props.filter(x => state.indexOf(x) < 0)
+    let remainClasses = state.filter(x => props.indexOf(x) >= 0 || x === 'proper-section')
+
+    return remainClasses.concat(newClasses).join(' ')
   }
 
   calculateDimensions () {
@@ -120,6 +133,7 @@ Section.defaultProps = {
   type: 'columns',
   mode: 'default',
   position: '0%',
+  className: '',
   index: 0
 }
 
