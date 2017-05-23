@@ -10,7 +10,7 @@ class Section extends PureComponent {
 
     this.state = {
       key: 'section--' + shortid.generate(),
-      className: 'section',
+      className: 'proper-section',
       width: null,
       height: null
     }
