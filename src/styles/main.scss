@@ -1,12 +1,24 @@
+#mainTestDiv {
+	box-sizing: border-box;
+	width: 100%;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+}
+
 .ProperLayout {
-	.layout, .section {
+	&.layout, .section {
 		box-sizing: border-box;
 		border: 0;
 		margin: 0;
 		padding: 0;
 	}
 
-	.layout {
+	&.layout {
 		position: relative;
 		width: 100%;
 		height: 100%;

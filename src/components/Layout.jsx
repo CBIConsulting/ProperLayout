@@ -250,7 +250,7 @@ class Layout extends Component {
         key={this.state.key}
         style={{width: '100%', height: '100%'}}
         ref={node => { this.node = node }}
-        className={'ProperLayout' + this.state.className}>
+        className={'ProperLayout ' + this.state.className}>
         {this.state.children}
       </div>
     )
