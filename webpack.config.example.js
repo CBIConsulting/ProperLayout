@@ -1,29 +1,41 @@
-var webpack = require('webpack');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  context: __dirname + '/src',
-  entry: "./example.js",
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: ["babel-loader"],
-      },
-      {
-        test: /\.scss$/,
-        loader: 'style!css!sass'
-      },
-      { test: /\.css$/, exclude: /\.useable\.css$/, loader: "style!css" },
-      { test: /\.useable\.css$/, loader: "style/useable!css" }
-    ],
-  },
-  output: {
-    filename: "example.js",
-    path: __dirname + "/example",
-  },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.optimize.DedupePlugin()
-  ]
-}
+	entry: './example/example.jsx',
+	resolve: {
+		extensions: ['.js', '.jsx', '.scss']
+	},
+	module: {
+		rules: [
+			{
+				test: /\.js$|\.jsx$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['react', 'es2015'],
+						plugins: ['transform-object-rest-spread']
+					}
+				}
+			},
+			{
+				test: /\.scss$/,
+				loader: 'style-loader!css-loader!sass-loader'
+			}
+		],
+	},
+	output: {
+		filename: 'bundle.js',
+		path: __dirname + "/example"
+	},
+	plugins: [
+		new HTMLWebpackPlugin()
+	],
+	externals: {
+		'cheerio': 'window',
+		'react/addons': 'react',
+		'react/lib/ExecutionEnvironment': 'react',
+		'react/lib/ReactContext': 'react'
+	},
+	devtool: 'inline-source-map'
+};
