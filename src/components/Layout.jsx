@@ -224,18 +224,18 @@ class Layout extends Component {
     let nextPosition = 0
 
     return Children.map(props.children, (child, index) => {
-      let childrenProps = this.evaluateDeprecatedProps(child)
+      let childProps = this.evaluateDeprecatedProps(child)
 
-      childrenProps.type = props.type
-      childrenProps.mode = props.mode
-      childrenProps.borders = props.borders
-      childrenProps.index = index
+      childProps.type = props.type
+      childProps.mode = props.mode
+      childProps.borders = props.borders
+      childProps.index = index
 
-      if (childrenProps.size) {
-        let sizeType = this.evaluateSizeType(childrenProps.size)
-        let parsedSize = parseFloat(childrenProps.size)
+      if (childProps.size) {
+        let sizeType = this.evaluateSizeType(childProps.size)
+        let parsedSize = parseFloat(childProps.size)
 
-        childrenProps.position = nextPosition + '%'
+        childProps.position = nextPosition + '%'
 
         if (sizeType === 'pixel') {
           nextPosition += parsedSize * 100 / totalSpace
@@ -243,13 +243,13 @@ class Layout extends Component {
           nextPosition += parsedSize
         }
       } else {
-        childrenProps.size = autoSize + '%'
-        childrenProps.position = nextPosition + '%'
+        childProps.size = autoSize + '%'
+        childProps.position = nextPosition + '%'
 
         nextPosition += autoSize
       }
 
-      return React.cloneElement(child, childrenProps)
+      return React.cloneElement(child, childProps)
     })
   }
 
