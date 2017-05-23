@@ -15,7 +15,7 @@ describe('Layout', () => {
     })
 
     it("has class='section'", () => {
-      expect(wrapper.hasClass('section')).to.be.true
+      expect(wrapper.hasClass('proper-section')).to.be.true
     })
 
     it("has key='section--*'", () => {
@@ -43,7 +43,7 @@ describe('Layout', () => {
     })
 
     it("has state.className='section'", () => {
-      expect(wrapper.state('className')).to.equal('section')
+      expect(wrapper.state('className')).to.equal('proper-section')
     })
 
     it('has state.width=undefined', () => {
@@ -55,7 +55,7 @@ describe('Layout', () => {
     })
 
     it("has class='section'", () => {
-      expect(wrapper.hasClass('section')).to.be.true
+      expect(wrapper.hasClass('proper-section')).to.be.true
     })
 
     let styles = wrapper.find('div').prop('style')
