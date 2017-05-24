@@ -6,7 +6,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { Section } from '../src/ProperLayout'
 
-describe('Layout', () => {
+describe('Section', () => {
   describe('Shallow <Section />', () => {
     const wrapper = shallow(<Section />)
 
@@ -16,10 +16,6 @@ describe('Layout', () => {
 
     it("has class='section'", () => {
       expect(wrapper.hasClass('proper-section')).to.be.true
-    })
-
-    it("has key='section--*'", () => {
-      expect(wrapper.key()).to.match(/^section--[\w-]+$/)
     })
   })
 
@@ -36,10 +32,6 @@ describe('Layout', () => {
 
     it('has props.index=0', () => {
       expect(wrapper.prop('index')).to.equal(0)
-    })
-
-    it("has state.key='section--*'", () => {
-      expect(wrapper.state('key')).to.match(/^section--[\w-]+$/)
     })
 
     it("has state.className='section'", () => {

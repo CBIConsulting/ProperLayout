@@ -6,7 +6,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { Layout } from '../src/ProperLayout'
 
-describe('Section', () => {
+describe('Layout', () => {
   describe('Shallow <Layout />', () => {
     const wrapper = shallow(<Layout />)
 
@@ -16,10 +16,6 @@ describe('Section', () => {
 
     it("has class='layout'", () => {
       expect(wrapper.hasClass('layout')).to.be.true
-    })
-
-    it("has key='layout--*'", () => {
-      expect(wrapper.key()).to.match(/^layout--[\w-]+$/)
     })
   })
 
@@ -36,10 +32,6 @@ describe('Section', () => {
 
     it("has props.direction='default'", () => {
       expect(wrapper.prop('direction')).to.equal('default')
-    })
-
-    it("has state.key='layout--*'", () => {
-      expect(wrapper.state('key')).to.match(/^layout--[\w-]+$/)
     })
 
     it("has state.className='layout columns'", () => {
