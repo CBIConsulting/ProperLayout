@@ -2,15 +2,23 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin({
-	filename: 'properlayout.min.css',
+	filename: 'properlayout.css',
 	disable: process.env.NODE_ENV === "development"
 });
 
 module.exports = {
 	entry: './src/ProperLayout.jsx',
+	target: 'node',
+
 	resolve: {
 		extensions: ['.js', '.jsx', '.scss']
 	},
+
+	node: {
+		__dirname: false,
+		__filename: false
+	},
+
 	module: {
 		rules: [
 			{
@@ -32,21 +40,18 @@ module.exports = {
 		]
 	},
 	output: {
-		filename: 'properlayout.js',
-		path: __dirname + "/dist"
+		filename: 'ProperLayout.js',
+		path: __dirname + "/lib",
+		library: 'ProperLayout',
+		libraryTarget: 'umd2'
 	},
-	externals: {
-		'cheerio': 'window',
-		'react/addons': 'react',
-		'react/lib/ExecutionEnvironment': 'react',
-		'react/lib/ReactContext': 'react'
-	},
+	externals: [/^\w.*$/i],
 	plugins: [
 		extractSass,
 		new webpack.DefinePlugin({
 			'process.env': {
 				NODE_ENV: JSON.stringify('production'),
-				APP_ENV: JSON.stringify('browser')
+				APP_ENV: JSON.stringify('node')
 			}
 		})
 	]

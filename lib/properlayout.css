@@ -1,0 +1,44 @@
+#mainTestDiv {
+  box-sizing: border-box;
+  width: 100%;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+.ProperLayout.layout, .ProperLayout .proper-section {
+  box-sizing: border-box;
+  border: 0;
+  margin: 0;
+  padding: 0; }
+
+.ProperLayout.layout {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; }
+  .ProperLayout.layout.columns > .proper-section {
+    display: inline-block; }
+  .ProperLayout.layout.rows > .proper-section {
+    display: block; }
+  .ProperLayout.layout.spaced > .proper-section {
+    margin: 16px 8px; }
+  .ProperLayout.layout.borders > .proper-section {
+    border: 1px solid #333; }
+  .ProperLayout.layout.borders.spaced > .proper-section {
+    border: 1px dashed #333; }
+
+.ProperLayout .proper-section {
+  position: absolute;
+  overflow: hidden; }
+
+.ProperLayout.layout.columns.reverse {
+  direction: rtl; }
+
+.ProperLayout.layout.rows.reverse, .ProperLayout.layout.rows.reverse > .proper-section {
+  transform: scaleY(-1);
+  -ms-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1); }
