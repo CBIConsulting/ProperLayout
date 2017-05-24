@@ -38,7 +38,7 @@
 .ProperLayout.layout.columns.reverse {
   direction: rtl; }
 
-.ProperLayout.layout.rows.reverse, .ProperLayout .layout.rows.reverse > .proper-section {
+.ProperLayout.layout.rows.reverse, .ProperLayout.layout.rows.reverse > .proper-section {
   transform: scaleY(-1);
   -ms-transform: scaleY(-1);
   -webkit-transform: scaleY(-1); }

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.example.js --inline --hot --content-base ./example",
     "clean": "rm -Rvf css && rm -Rvf dist && rm -Rvf lib && mkdir dist && mkdir css && mkdir lib",
-    "build": "npm run clean && node_modules/.bin/babel src --out-dir lib && webpack --config webpack.config.example.js && webpack",
+    "build": "npm run clean && node_modules/.bin/webpack --config webpack.node.config.js && node_modules/.bin/webpack --config webpack.config.example.js && node_modules/.bin/webpack",
     "test": "node_modules/.bin/karma start --single-run",
     "tdd": "node_modules/.bin/karma start"
   },
