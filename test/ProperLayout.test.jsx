@@ -92,7 +92,7 @@ describe('ProperLayout:', () => {
 
     it("each Section should have style.width='50%'", () => {
       sections.forEach(section => {
-        let styles = section.find('div.section').node.style
+        let styles = section.find('div.proper-section').node.style
 
         expect(styles.width).to.equal('50%')
       })
@@ -100,20 +100,20 @@ describe('ProperLayout:', () => {
 
     it("each Section should have style.height='100%'", () => {
       sections.forEach(section => {
-        let styles = section.find('div.section').node.style
+        let styles = section.find('div.proper-section').node.style
 
         expect(styles.height).to.equal('100%')
       })
     })
 
     it("first Section should have style.left='0%'", () => {
-      let styles = firstSection.find('div.section').node.style
+      let styles = firstSection.find('div.proper-section').node.style
 
       expect(styles.left).to.equal('0%')
     })
 
     it("second Section should have style.left='50%'", () => {
-      let styles = secondSection.find('div.section').node.style
+      let styles = secondSection.find('div.proper-section').node.style
 
       expect(styles.left).to.equal('50%')
     })
@@ -187,7 +187,7 @@ describe('ProperLayout:', () => {
 
     it("each Section should have style.width='100%'", () => {
       sections.forEach(section => {
-        let styles = section.find('div.section').node.style
+        let styles = section.find('div.proper-section').node.style
 
         expect(styles.width).to.equal('100%')
       })
@@ -195,20 +195,20 @@ describe('ProperLayout:', () => {
 
     it("each Section should have style.height='50%'", () => {
       sections.forEach(section => {
-        let styles = section.find('div.section').node.style
+        let styles = section.find('div.proper-section').node.style
 
         expect(styles.height).to.equal('50%')
       })
     })
 
     it("first Section should have style.top='0%'", () => {
-      let styles = firstSection.find('div.section').node.style
+      let styles = firstSection.find('div.proper-section').node.style
 
       expect(styles.top).to.equal('0%')
     })
 
     it("second Section should have style.top='50%'", () => {
-      let styles = secondSection.find('div.section').node.style
+      let styles = secondSection.find('div.proper-section').node.style
 
       expect(styles.top).to.equal('50%')
     })
@@ -266,7 +266,7 @@ describe('ProperLayout:', () => {
 
     it("each Section should have style.width='calc(50% - 16px)'", () => {
       sections.forEach(section => {
-        let styles = section.find('div.section').node.style
+        let styles = section.find('div.proper-section').node.style
 
         expect(styles.width).to.equal('calc(50% - 16px)')
       })
@@ -274,7 +274,7 @@ describe('ProperLayout:', () => {
 
     it("each Section should have style.height='calc(100% - 32px)'", () => {
       sections.forEach(section => {
-        let styles = section.find('div.section').node.style
+        let styles = section.find('div.proper-section').node.style
 
         expect(styles.height).to.equal('calc(100% - 32px)')
       })
@@ -282,7 +282,7 @@ describe('ProperLayout:', () => {
 
     it("each Section should have style.margin='16px 8px'", () => {
       sections.forEach(section => {
-        let node = section.find('div.section').node
+        let node = section.find('div.proper-section').node
         let styles = window.getComputedStyle(node)
 
         expect(styles.margin).to.equal('16px 8px')
@@ -334,7 +334,7 @@ describe('ProperLayout:', () => {
 
     it("each Section should have style.width='calc(100% - 16px)'", () => {
       sections.forEach(section => {
-        let styles = section.find('div.section').node.style
+        let styles = section.find('div.proper-section').node.style
 
         expect(styles.width).to.equal('calc(100% - 16px)')
       })
@@ -342,7 +342,7 @@ describe('ProperLayout:', () => {
 
     it("each Section should have style.height='calc(50% - 32px)'", () => {
       sections.forEach(section => {
-        let styles = section.find('div.section').node.style
+        let styles = section.find('div.proper-section').node.style
 
         expect(styles.height).to.equal('calc(50% - 32px)')
       })
@@ -423,7 +423,7 @@ describe('ProperLayout:', () => {
 
     it("each Col should have style.width='50%'", () => {
       cols.forEach(col => {
-        let styles = col.find('div.section').node.style
+        let styles = col.find('div.proper-section').node.style
 
         expect(styles.width).to.equal('50%')
       })
@@ -431,20 +431,20 @@ describe('ProperLayout:', () => {
 
     it("each Col should have style.height='100%'", () => {
       cols.forEach(col => {
-        let styles = col.find('div.section').node.style
+        let styles = col.find('div.proper-section').node.style
 
         expect(styles.height).to.equal('100%')
       })
     })
 
     it("firsCol should have style.left='0%'", () => {
-      let styles = firstCol.find('div.section').node.style
+      let styles = firstCol.find('div.proper-section').node.style
 
       expect(styles.left).to.equal('0%')
     })
 
     it("secondCol should have style.left='50%'", () => {
-      let styles = secondCol.find('div.section').node.style
+      let styles = secondCol.find('div.proper-section').node.style
 
       expect(styles.left).to.equal('50%')
     })
@@ -524,7 +524,7 @@ describe('ProperLayout:', () => {
 
     it("each Col should have style.width='100%'", () => {
       rows.forEach(row => {
-        let styles = row.find('div.section').node.style
+        let styles = row.find('div.proper-section').node.style
 
         expect(styles.width).to.equal('100%')
       })
@@ -532,20 +532,20 @@ describe('ProperLayout:', () => {
 
     it("each Col should have style.height='50%'", () => {
       rows.forEach(row => {
-        let styles = row.find('div.section').node.style
+        let styles = row.find('div.proper-section').node.style
 
         expect(styles.height).to.equal('50%')
       })
     })
 
     it("firsCol should have style.top='0%'", () => {
-      let styles = firstRow.find('div.section').node.style
+      let styles = firstRow.find('div.proper-section').node.style
 
       expect(styles.top).to.equal('0%')
     })
 
     it("secondCol should have style.top='50%'", () => {
-      let styles = secondRow.find('div.section').node.style
+      let styles = secondRow.find('div.proper-section').node.style
 
       expect(styles.top).to.equal('50%')
     })
@@ -874,7 +874,7 @@ describe('ProperLayout:', () => {
 
     it('each Section should have style.border="1px solid #333"', () => {
       sections.forEach(section => {
-        section = section.find('div.section').node
+        section = section.find('div.proper-section').node
         let styles = window.getComputedStyle(section)
 
         expect(styles.getPropertyValue('border')).to.equal('1px solid rgb(51, 51, 51)')
@@ -915,7 +915,7 @@ describe('ProperLayout:', () => {
 
     it('each Section should have style.border="1px dashed #333"', () => {
       sections.forEach(section => {
-        section = section.find('div.section').node
+        section = section.find('div.proper-section').node
         let styles = window.getComputedStyle(section)
 
         expect(styles.getPropertyValue('border')).to.equal('1px dashed rgb(51, 51, 51)')

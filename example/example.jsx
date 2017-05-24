@@ -1,6 +1,6 @@
 'use strict'
 
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Layout, Section, Row, Col } from '../src/ProperLayout'
 
@@ -125,7 +125,7 @@ const cases = {
   ),
   borders: (
     <Layout borders>
-      <Section />
+      <Section size='400px' />
       <Section />
     </Layout>
   ),
@@ -137,8 +137,52 @@ const cases = {
   )
 }
 
+class Borders extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      size1: '100px',
+      size2: '150px',
+      className: 'lololo',
+      rend: false
+    }
+  }
+
+  render () {
+    return (
+      <Layout borders>
+        <Section size={this.state.size1}>
+          <button onClick={() => {
+            this.setState({
+              size1: '200px',
+              size2: '300px',
+              className: 'lololo lalala'
+            })
+          }}>
+            click
+          </button>
+        </Section>
+        <Section className={this.state.className} />
+        <Section size={this.state.size2}>
+          <button onClick={() => {
+            this.setState({
+              rend: true,
+              className: 'lalala'
+            })
+          }}>
+            click
+          </button>
+          <div style={{ height: 'calc(100% - 30px)', width: '100%' }}>
+            {this.state.rend ? cases.spacedBorders : null}
+          </div>
+        </Section>
+      </Layout>
+    )
+  }
+}
+
 ReactDOM.render(
-  cases.common,
+  <Borders />,
   main
 )
 

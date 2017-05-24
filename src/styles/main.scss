@@ -11,7 +11,7 @@
 }
 
 .ProperLayout {
-	&.layout, .section {
+	&.layout, .proper-section {
 		box-sizing: border-box;
 		border: 0;
 		margin: 0;
@@ -25,48 +25,48 @@
 		overflow: hidden;
 
 	  &.columns {
-	  	>.section {
+	  	>.proper-section {
 	  		display: inline-block;
 	  	}
 	  }
 
 	  &.rows {
-	  	>.section {
+	  	>.proper-section {
 	  		display: block;
 	  	}
 	  }
 
 	  &.spaced {
-	  	>.section {
+	  	>.proper-section {
 	  		margin: 16px 8px;
 	  	}
 	  }
 
 	  &.borders {
-	    >.section {
+	    >.proper-section {
 	      border: 1px solid #333;
 	    }
 
 	    &.spaced {
-	      >.section {
+	      >.proper-section {
 	        border: 1px dashed #333;
 	      }
 	    }
 	  }
 	}
 
-	.section {
+	.proper-section {
 		position: absolute;
 		overflow: hidden;
 	}
 
 	// flex-direction (currently, after reverse some sections separate by one pixel)
 	// --- reverse
-	.layout.columns.reverse {
+	&.layout.columns.reverse {
 		direction: rtl;
 	}
 
-	.layout.rows.reverse, .layout.rows.reverse > .section {
+	&.layout.rows.reverse, .layout.rows.reverse > .proper-section {
 		transform: scaleY(-1);
 		-ms-transform: scaleY(-1);
 		-webkit-transform: scaleY(-1);

@@ -39,6 +39,13 @@ class Layout extends Component {
     window.addEventListener('resize', this.handleResize)
   }
 
+  componentWillReceiveProps (nextProps) {
+    this.setState(() => ({
+      ...this.state,
+      children: this.updateChildren(nextProps, true)
+    }))
+  }
+
   componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize)
   }
@@ -173,16 +180,16 @@ class Layout extends Component {
   }
 
   // Calculates and returns size for elements without custom sizes
-  calculateAutoSize () {
+  calculateAutoSize (props = this.props) {
     let counter = 0
-    let totalSpace = this.props.type === 'columns'
+    let totalSpace = props.type === 'columns'
       ? this.getDimensions(this.node).width
       : this.getDimensions(this.node).height
     let freeSpace = totalSpace
 
-    Children.forEach(this.props.children, (child, index) => {
-      let props = this.evaluateDeprecatedProps(child)
-      let size = props.size
+    Children.forEach(props.children, (child, index) => {
+      let childProps = this.evaluateDeprecatedProps(child)
+      let size = childProps.size
 
       if (!size) {
         counter++
@@ -210,23 +217,27 @@ class Layout extends Component {
   }
 
   // Updating children props for positioning
-  updateChildren () {
-    let {autoSize, totalSpace} = this.calculateAutoSize()
+  updateChildren (props = this.props, manual) {
+    let {autoSize, totalSpace} = this.calculateAutoSize(props)
     let nextPosition = 0
 
-    return Children.map(this.props.children, (child, index) => {
-      let props = this.evaluateDeprecatedProps(child)
+    return Children.map(props.children, (child, index) => {
+      let childProps = this.evaluateDeprecatedProps(child)
 
-      props.type = this.props.type
-      props.mode = this.props.mode
-      props.borders = this.props.borders
-      props.index = index
+      if (manual) {
+        childProps.key = 'section--' + shortid.generate()
+      }
 
-      if (props.size) {
-        let sizeType = this.evaluateSizeType(props.size)
-        let parsedSize = parseFloat(props.size)
+      childProps.type = props.type
+      childProps.mode = props.mode
+      childProps.borders = props.borders
+      childProps.index = index
 
-        props.position = nextPosition + '%'
+      if (childProps.size) {
+        let sizeType = this.evaluateSizeType(childProps.size)
+        let parsedSize = parseFloat(childProps.size)
+
+        childProps.position = nextPosition + '%'
 
         if (sizeType === 'pixel') {
           nextPosition += parsedSize * 100 / totalSpace
@@ -234,20 +245,19 @@ class Layout extends Component {
           nextPosition += parsedSize
         }
       } else {
-        props.size = autoSize + '%'
-        props.position = nextPosition + '%'
+        childProps.size = autoSize + '%'
+        childProps.position = nextPosition + '%'
 
         nextPosition += autoSize
       }
 
-      return React.cloneElement(child, props)
+      return React.cloneElement(child, childProps)
     })
   }
 
   render () {
     return (
       <div
-        key={this.state.key}
         style={{width: '100%', height: '100%'}}
         ref={node => { this.node = node }}
         className={'ProperLayout ' + this.state.className}>

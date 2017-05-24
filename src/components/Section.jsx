@@ -2,19 +2,18 @@
 
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import shortid from 'shortid'
 
 class Section extends PureComponent {
   constructor (props) {
     super(props)
 
     this.state = {
-      key: 'section--' + shortid.generate(),
-      className: 'section',
+      className: 'proper-section',
       width: null,
       height: null
     }
 
+    this.evaluateClasses = this.evaluateClasses.bind(this)
     this.calculateDimensions = this.calculateDimensions.bind(this)
     this.warnDeprecatedProps = this.warnDeprecatedProps.bind(this)
   }
@@ -26,6 +25,7 @@ class Section extends PureComponent {
 
     this.setState(() => ({
       ...this.state,
+      className: this.evaluateClasses(),
       width,
       height
     }))
@@ -36,9 +36,20 @@ class Section extends PureComponent {
 
     this.setState(() => ({
       ...this.state,
+      className: this.evaluateClasses(nextProps),
       width,
       height
     }))
+  }
+
+  evaluateClasses (props = this.props, state = this.state) {
+    state = this.state.className.split(' ')
+    props = props.className.split(' ')
+
+    let newClasses = props.filter(x => x && state.indexOf(x) < 0)
+    let remainClasses = state.filter(x => props.indexOf(x) >= 0 || x === 'proper-section')
+
+    return remainClasses.concat(newClasses).join(' ')
   }
 
   calculateDimensions () {
@@ -107,7 +118,6 @@ class Section extends PureComponent {
 
     return (
       <div
-        key={this.state.key}
         style={styles}
         className={this.state.className}>
         {this.props.children || this.props.index + 1}
@@ -120,6 +130,7 @@ Section.defaultProps = {
   type: 'columns',
   mode: 'default',
   position: '0%',
+  className: '',
   index: 0
 }
 
