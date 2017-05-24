@@ -2,14 +2,12 @@
 
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import shortid from 'shortid'
 
 class Section extends PureComponent {
   constructor (props) {
     super(props)
 
     this.state = {
-      key: 'section--' + shortid.generate(),
       className: 'proper-section',
       width: null,
       height: null
@@ -48,7 +46,7 @@ class Section extends PureComponent {
     state = this.state.className.split(' ')
     props = props.className.split(' ')
 
-    let newClasses = props.filter(x => state.indexOf(x) < 0)
+    let newClasses = props.filter(x => x && state.indexOf(x) < 0)
     let remainClasses = state.filter(x => props.indexOf(x) >= 0 || x === 'proper-section')
 
     return remainClasses.concat(newClasses).join(' ')
@@ -120,7 +118,6 @@ class Section extends PureComponent {
 
     return (
       <div
-        key={this.state.key}
         style={styles}
         className={this.state.className}>
         {this.props.children || this.props.index + 1}

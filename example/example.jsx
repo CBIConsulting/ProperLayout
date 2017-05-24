@@ -143,7 +143,8 @@ class Borders extends Component {
     this.state = {
       size1: '100px',
       size2: '150px',
-      className: 'lololo'
+      className: 'lololo',
+      rend: false
     }
   }
 
@@ -161,16 +162,20 @@ class Borders extends Component {
             click
           </button>
         </Section>
+        <Section className={this.state.className} />
         <Section size={this.state.size2}>
           <button onClick={() => {
             this.setState({
+              rend: true,
               className: 'lalala'
             })
           }}>
             click
           </button>
+          <div style={{ height: 'calc(100% - 30px)', width: '100%' }}>
+            {this.state.rend ? cases.spacedBorders : null}
+          </div>
         </Section>
-        <Section className={this.state.className} />
       </Layout>
     )
   }

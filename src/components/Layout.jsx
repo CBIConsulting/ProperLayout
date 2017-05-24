@@ -42,10 +42,8 @@ class Layout extends Component {
   componentWillReceiveProps (nextProps) {
     this.setState(() => ({
       ...this.state,
-      children: this.updateChildren(nextProps)
-    }), () => {
-      this.handleResize()
-    })
+      children: this.updateChildren(nextProps, true)
+    }))
   }
 
   componentWillUnmount () {
@@ -135,40 +133,40 @@ class Layout extends Component {
   // Handles page resizing
   handleResize () {
     // Update children when at least one has fixed size
-    // if (this.state.isChildFixed) {
-    this.setState(() => ({
-      ...this.state,
-      children: this.updateChildren()
-    }), () => {
-      // Get last rendered values to readjust children
-      let parent = this.props.type === 'columns'
-        ? this.getDimensions(this.node).width
-        : this.getDimensions(this.node).height
-      let children = 0
+    if (this.state.isChildFixed) {
+      this.setState(() => ({
+        ...this.state,
+        children: this.updateChildren()
+      }), () => {
+        // Get last rendered values to readjust children
+        let parent = this.props.type === 'columns'
+          ? this.getDimensions(this.node).width
+          : this.getDimensions(this.node).height
+        let children = 0
 
-      this.node.childNodes.forEach(child => {
-        children += this.props.type === 'columns'
-        ? this.getDimensions(child).width
-        : this.getDimensions(child).height
+        this.node.childNodes.forEach(child => {
+          children += this.props.type === 'columns'
+          ? this.getDimensions(child).width
+          : this.getDimensions(child).height
+        })
+
+        // Adjusting children with a timeout,
+        // so it will update only the last time
+        if (parent !== children) {
+          clearTimeout(this.state.adjustTimeout)
+
+          this.setState(() => ({
+            ...this.state,
+            adjustTimeout: setTimeout(() => {
+              this.setState(() => ({
+                ...this.state,
+                children: this.updateChildren()
+              }))
+            }, 200)
+          }))
+        }
       })
-
-      // Adjusting children with a timeout,
-      // so it will update only the last time
-      if (parent !== children) {
-        clearTimeout(this.state.adjustTimeout)
-
-        this.setState(() => ({
-          ...this.state,
-          adjustTimeout: setTimeout(() => {
-            this.setState(() => ({
-              ...this.state,
-              children: this.updateChildren()
-            }))
-          }, 200)
-        }))
-      }
-    })
-    // }
+    }
   }
 
   // Return rendered width and height from a node
@@ -182,16 +180,16 @@ class Layout extends Component {
   }
 
   // Calculates and returns size for elements without custom sizes
-  calculateAutoSize () {
+  calculateAutoSize (props = this.props) {
     let counter = 0
-    let totalSpace = this.props.type === 'columns'
+    let totalSpace = props.type === 'columns'
       ? this.getDimensions(this.node).width
       : this.getDimensions(this.node).height
     let freeSpace = totalSpace
 
-    Children.forEach(this.props.children, (child, index) => {
-      let props = this.evaluateDeprecatedProps(child)
-      let size = props.size
+    Children.forEach(props.children, (child, index) => {
+      let childProps = this.evaluateDeprecatedProps(child)
+      let size = childProps.size
 
       if (!size) {
         counter++
@@ -219,12 +217,16 @@ class Layout extends Component {
   }
 
   // Updating children props for positioning
-  updateChildren (props = this.props) {
-    let {autoSize, totalSpace} = this.calculateAutoSize()
+  updateChildren (props = this.props, manual) {
+    let {autoSize, totalSpace} = this.calculateAutoSize(props)
     let nextPosition = 0
 
     return Children.map(props.children, (child, index) => {
       let childProps = this.evaluateDeprecatedProps(child)
+
+      if (manual) {
+        childProps.key = 'section--' + shortid.generate()
+      }
 
       childProps.type = props.type
       childProps.mode = props.mode
@@ -256,7 +258,6 @@ class Layout extends Component {
   render () {
     return (
       <div
-        key={this.state.key}
         style={{width: '100%', height: '100%'}}
         ref={node => { this.node = node }}
         className={this.state.className}>
